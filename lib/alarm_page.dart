@@ -18,7 +18,7 @@ class _AlarmPageState extends State<AlarmPage> {
           backgroundColor: alarmService.subColor,
           appBar: AppBar(
               title: const Center(
-            child: Text('Alarm',style: TextStyle(color: Colors.white)),
+            child: Text('Alarm', style: TextStyle(color: Colors.white)),
           )),
           body: const Center(
             child: Text("หน้าตั้งปลุกจ้า"),

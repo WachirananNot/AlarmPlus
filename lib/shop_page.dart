@@ -18,7 +18,7 @@ class _ShopPageState extends State<ShopPage> {
           backgroundColor: alarmService.subColor,
           appBar: AppBar(
               title: const Center(
-            child: Text('Shop',style: TextStyle(color: Colors.white)),
+            child: Text('Shop', style: TextStyle(color: Colors.white)),
           )),
           body: const Center(
             child: Text("หน้าร้านค้าจ้า"),
