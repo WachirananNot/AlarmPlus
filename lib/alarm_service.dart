@@ -1,9 +1,10 @@
+import 'package:alarmplus/time_picker.dart';
 import 'package:flutter/material.dart';
 
 class AlarmService extends ChangeNotifier {
   late MaterialColor color;
   late MaterialColor subColor;
-  late List<String> time = [];
+  late List<String> listTime = [];
   MaterialColor changeColorCode(int hexColor) {
     color = MaterialColor(hexColor, const <int, Color>{
       50: Color.fromRGBO(238, 129, 48, .1),
@@ -18,6 +19,12 @@ class AlarmService extends ChangeNotifier {
       900: Color.fromRGBO(238, 129, 48, 1),
     });
     return color;
+  }
+
+  void setTime(String currentTime) {
+    if (!listTime.contains(currentTime)) {
+      listTime.add(currentTime);
+    }
   }
 
   MaterialColor changeSubColorCode(int hexColor) {

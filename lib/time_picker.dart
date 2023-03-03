@@ -1,7 +1,10 @@
+import 'package:alarmplus/alarm_service.dart';
 import 'package:flutter/material.dart';
 
 class TimeScrollPicker extends StatefulWidget {
-  const TimeScrollPicker({super.key});
+  final ValueSetter<int> setHour;
+  final ValueSetter<int> setMinute;
+  TimeScrollPicker({super.key, required this.setHour, required this.setMinute});
 
   @override
   State<TimeScrollPicker> createState() => _TimeScrollPickerState();
@@ -18,6 +21,11 @@ class _TimeScrollPickerState extends State<TimeScrollPicker> {
           Container(
             width: 70,
             child: ListWheelScrollView.useDelegate(
+                onSelectedItemChanged: (value) {
+                  setState(() {
+                    widget.setHour(value);
+                  });
+                },
                 itemExtent: 50,
                 perspective: 0.005,
                 diameterRatio: 1.2,
@@ -46,6 +54,11 @@ class _TimeScrollPickerState extends State<TimeScrollPicker> {
           Container(
             width: 70,
             child: ListWheelScrollView.useDelegate(
+                onSelectedItemChanged: (value) {
+                  setState(() {
+                    widget.setMinute(value);
+                  });
+                },
                 itemExtent: 50,
                 perspective: 0.005,
                 diameterRatio: 1.2,
