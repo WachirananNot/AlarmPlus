@@ -28,6 +28,10 @@ class _AlarmPageState extends State<AlarmPage> {
       minute = value < 10 ? '0$value' : value.toString();
     }
 
+    void pressEdit() {
+      setState(() {});
+    }
+
     return Consumer<AlarmService>(
       builder: (_, alarmService, __) {
         return Scaffold(
@@ -37,11 +41,11 @@ class _AlarmPageState extends State<AlarmPage> {
             child: Text('Alarm', style: TextStyle(color: Colors.white)),
           )),
           body: Center(
-            child: alarmService.listTime.isEmpty
+            child: alarmService.alarmItem.isEmpty
                 ? const Text("There is no alarm at this time.")
                 : ListView.builder(
                     padding: const EdgeInsets.all(8),
-                    itemCount: alarmService.listTime.length,
+                    itemCount: alarmService.alarmItem.length,
                     itemBuilder: (((context, index) {
                       return Dismissible(
                         key: UniqueKey(),
@@ -61,9 +65,9 @@ class _AlarmPageState extends State<AlarmPage> {
                         direction: DismissDirection.endToStart,
                         onDismissed: (direction) {
                           setState(() {
-                            currentTime = alarmService.listTime[index];
+                            currentTime = alarmService.alarmItem[index]![0];
                             setState(() {
-                              alarmService.listTime.remove(currentTime);
+                              alarmService.delAlarm(currentTime);
                               currentTime = "";
                             });
                           });
@@ -74,7 +78,9 @@ class _AlarmPageState extends State<AlarmPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => AlarmPress(
-                                          oldTime: alarmService.listTime[index],
+                                          oldTime:
+                                              alarmService.alarmItem[index]![0],
+                                          pressEdit: pressEdit,
                                         )));
                             setState(() {});
                           },
@@ -84,13 +90,14 @@ class _AlarmPageState extends State<AlarmPage> {
                               child: Center(
                                 child: ListTile(
                                     title: Text(
-                                      alarmService.listTime[index],
+                                      alarmService.alarmItem[index]?[0],
                                       style:
                                           Theme.of(context).textTheme.headline4,
                                     ),
                                     trailing: LiteRollingSwitch(
+                                      value: alarmService.alarmItem[index]![1],
                                       animationDuration:
-                                          Duration(milliseconds: 300),
+                                          const Duration(milliseconds: 300),
                                       width: 100,
                                       textOn: "On",
                                       textOff: "Off",
@@ -99,7 +106,9 @@ class _AlarmPageState extends State<AlarmPage> {
                                       iconOn: Icons.done,
                                       iconOff: Icons.alarm_off,
                                       onChanged: (bool position) {},
-                                      onTap: () {},
+                                      onTap: () {
+                                        alarmService.turnOff(index);
+                                      },
                                       onDoubleTap: () {},
                                       onSwipe: () {},
                                     )),
@@ -179,13 +188,13 @@ class _AlarmPageState extends State<AlarmPage> {
                             TextButton(
                                 onPressed: (() {
                                   Navigator.pop(context);
+                                  alarmService
+                                      .setAlarm(["${hour}:${minute}", true]);
                                   setState(() {
-                                    alarmService.setTime("${hour}:${minute}");
                                     hour = "00";
                                     minute = "00";
                                   });
-
-                                  print(alarmService.listTime);
+                                  print(alarmService.alarmItem);
                                 }),
                                 child: const Text("Confirm")),
                           ],

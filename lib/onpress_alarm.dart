@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 
 class AlarmPress extends StatefulWidget {
   final String oldTime;
-  const AlarmPress({super.key, required this.oldTime});
+  final VoidCallback pressEdit;
+  const AlarmPress({super.key, required this.oldTime, required this.pressEdit});
 
   @override
   State<AlarmPress> createState() => _AlarmPressState();
@@ -79,12 +80,14 @@ class _AlarmPressState extends State<AlarmPress> {
                     alignment: Alignment.bottomCenter,
                     child: ElevatedButton(
                         onPressed: () {
-                          if (!alarmService.listTime
-                              .contains("${hour}:${minute}")) {
-                            alarmService.listTime[alarmService.listTime
-                                .indexOf(widget.oldTime)] = "${hour}:${minute}";
+                          if (!alarmService
+                              .checkDup(["${hour}:${minute}", true])) {
+                            alarmService.alarmItem[alarmService
+                                    .getKey([widget.oldTime, true])]![0] =
+                                "${hour}:${minute}";
                           }
-
+                          alarmService.sortListAlarm();
+                          widget.pressEdit();
                           Navigator.pop(context);
                         },
                         child: const Text('Save'))))
