@@ -1,10 +1,9 @@
-import 'package:alarmplus/alarm_service.dart';
 import 'package:flutter/material.dart';
 
 class TimeScrollPicker extends StatefulWidget {
   final ValueSetter<int> setHour;
   final ValueSetter<int> setMinute;
-  TimeScrollPicker({super.key, required this.setHour, required this.setMinute});
+  const TimeScrollPicker({super.key, required this.setHour, required this.setMinute});
 
   @override
   State<TimeScrollPicker> createState() => _TimeScrollPickerState();

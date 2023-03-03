@@ -81,6 +81,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.2"
+  intl:
+    dependency: transitive
+    description:
+      name: intl
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.18.0"
   lints:
     dependency: transitive
     description:
@@ -92,6 +99,13 @@ packages:
     dependency: transitive
     description:
       name: lists
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
+  lite_rolling_switch:
+    dependency: "direct main"
+    description:
+      name: lite_rolling_switch
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"

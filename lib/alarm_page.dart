@@ -1,8 +1,10 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
 import 'package:alarmplus/alarm_service.dart';
+import 'package:alarmplus/onpress_alarm.dart';
 import 'package:alarmplus/time_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:provider/provider.dart';
 
 class AlarmPage extends StatefulWidget {
@@ -41,22 +43,67 @@ class _AlarmPageState extends State<AlarmPage> {
                     padding: const EdgeInsets.all(8),
                     itemCount: alarmService.listTime.length,
                     itemBuilder: (((context, index) {
-                      return GestureDetector(
-                        child: Card(
-                          child: ListTile(
-                            title: Text(
-                              alarmService.listTime[index],
-                              style: Theme.of(context).textTheme.headline4,
+                      return Dismissible(
+                        key: UniqueKey(),
+                        background: Container(
+                          color: Colors.red,
+                          child: const Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: EdgeInsets.only(right: 20.0),
+                              child: Icon(
+                                Icons.delete,
+                                color: Colors.white,
+                              ),
                             ),
-                            trailing: IconButton(
-                              icon: const Icon(Icons.delete_forever),
-                              onPressed: () {
-                                currentTime = alarmService.listTime[index];
-                                setState(() {
-                                  alarmService.listTime.remove(currentTime);
-                                  currentTime = "";
-                                });
-                              },
+                          ),
+                        ),
+                        direction: DismissDirection.endToStart,
+                        onDismissed: (direction) {
+                          setState(() {
+                            currentTime = alarmService.listTime[index];
+                            setState(() {
+                              alarmService.listTime.remove(currentTime);
+                              currentTime = "";
+                            });
+                          });
+                        },
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (_) => AlarmPress(
+                                          oldTime: alarmService.listTime[index],
+                                        )));
+                            setState(() {});
+                          },
+                          child: Container(
+                            height: 100,
+                            child: Card(
+                              child: Center(
+                                child: ListTile(
+                                    title: Text(
+                                      alarmService.listTime[index],
+                                      style:
+                                          Theme.of(context).textTheme.headline4,
+                                    ),
+                                    trailing: LiteRollingSwitch(
+                                      animationDuration:
+                                          Duration(milliseconds: 300),
+                                      width: 100,
+                                      textOn: "On",
+                                      textOff: "Off",
+                                      colorOn: Colors.greenAccent,
+                                      colorOff: Colors.redAccent,
+                                      iconOn: Icons.done,
+                                      iconOff: Icons.alarm_off,
+                                      onChanged: (bool position) {},
+                                      onTap: () {},
+                                      onDoubleTap: () {},
+                                      onSwipe: () {},
+                                    )),
+                              ),
                             ),
                           ),
                         ),
