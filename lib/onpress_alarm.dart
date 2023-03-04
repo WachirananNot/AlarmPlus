@@ -80,11 +80,21 @@ class _AlarmPressState extends State<AlarmPress> {
                     alignment: Alignment.bottomCenter,
                     child: ElevatedButton(
                         onPressed: () {
-                          if (!alarmService
-                              .checkDup(["${hour}:${minute}", true])) {
-                            alarmService.alarmItem[alarmService
-                                    .getKey([widget.oldTime, true])]![0] =
-                                "${hour}:${minute}";
+                          if (!alarmService.checkDup([
+                            "${hour}:${minute}",
+                            true,
+                            int.parse(hour + minute)
+                          ])) {
+                            alarmService.alarmItem[alarmService.getKey([
+                              widget.oldTime,
+                              true,
+                              int.parse(widget.oldTime.replaceAll(":", ""))
+                            ])]![0] = "${hour}:${minute}";
+                            alarmService.alarmItem[alarmService.getKey([
+                              "${hour}:${minute}",
+                              true,
+                              int.parse(widget.oldTime.replaceAll(":", ""))
+                            ])]![2] = int.parse(hour + minute);
                           }
                           alarmService.sortListAlarm();
                           widget.pressEdit();

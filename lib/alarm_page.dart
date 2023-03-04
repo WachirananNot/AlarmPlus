@@ -189,7 +189,7 @@ class _AlarmPageState extends State<AlarmPage> {
                                 onPressed: (() {
                                   Navigator.pop(context);
                                   alarmService
-                                      .setAlarm(["${hour}:${minute}", true]);
+                                      .setAlarm(["${hour}:${minute}", true, int.parse(hour+minute)]);
                                   setState(() {
                                     hour = "00";
                                     minute = "00";
