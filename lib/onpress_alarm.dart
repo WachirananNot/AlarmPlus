@@ -2,6 +2,7 @@
 
 import 'package:alarmplus/alarm_service.dart';
 import 'package:alarmplus/time_picker.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,6 +24,32 @@ class _AlarmPressState extends State<AlarmPress> {
 
   void onMinuteChange(int value) {
     minute = value < 10 ? '0$value' : value.toString();
+  }
+
+  void triggerNotification(int index) async {
+    String localTimeZone =
+        await AwesomeNotifications().getLocalTimeZoneIdentifier();
+
+    int hour = (index ~/ 100);
+    int minute = (index % 100);
+
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: index,
+          channelKey: 'scheduled',
+          title: 'Test Notification of $index',
+          body: 'Test',
+        ),
+        schedule: NotificationCalendar(
+            hour: hour,
+            minute: minute,
+            second: 0,
+            timeZone: localTimeZone,
+            repeats: true));
+  }
+
+  void cancelNotification(int index) {
+    AwesomeNotifications().cancel(index);
   }
 
   @override

@@ -33,22 +33,43 @@ class _AlarmPageState extends State<AlarmPage> {
       setState(() {});
     }
 
-    void triggerNotification(int index) {
+    // create notification on that time
+    void triggerNotification(int index) async {
+      String localTimeZone =
+          await AwesomeNotifications().getLocalTimeZoneIdentifier();
+
+      int hour = (index ~/ 100);
+      int minute = (index % 100);
+
       AwesomeNotifications().createNotification(
           content: NotificationContent(
-              id: index,
-              channelKey: 'basic_channel',
-              title: 'Test Notification of $index',
-              body: 'Test'));
+            id: index,
+            channelKey: 'scheduled',
+            title: 'Test Notification of $index',
+            body: 'Test',
+          ),
+          schedule: NotificationCalendar(
+              hour: hour,
+              minute: minute,
+              second: 0,
+              timeZone: localTimeZone,
+              repeats: true));
     }
+
+    void cancelNotification(int index) {
+      AwesomeNotifications().cancel(index);
+    }
+
+    DateTime now = DateTime.now();
 
     return Consumer<AlarmService>(
       builder: (_, alarmService, __) {
         return Scaffold(
           backgroundColor: alarmService.subColor,
           appBar: AppBar(
-              title: const Center(
-            child: Text('Alarm', style: TextStyle(color: Colors.white)),
+              title: Center(
+            child: Text("${now.day}-${now.hour}-${now.minute}",
+                style: const TextStyle(color: Colors.white)),
           )),
           body: Center(
             child: alarmService.alarmItem.isEmpty
@@ -76,6 +97,8 @@ class _AlarmPageState extends State<AlarmPage> {
                         onDismissed: (direction) {
                           setState(() {
                             currentTime = alarmService.alarmItem[index]![0];
+                            cancelNotification(
+                                alarmService.alarmItem[index]![2]);
                             setState(() {
                               alarmService.delAlarm(currentTime);
                               currentTime = "";
@@ -118,6 +141,14 @@ class _AlarmPageState extends State<AlarmPage> {
                                       onChanged: (bool position) {},
                                       onTap: () {
                                         alarmService.turnOff(index);
+
+                                        int time =
+                                            alarmService.alarmItem[index]![2];
+                                        if (alarmService.alarmItem[index]![1]) {
+                                          triggerNotification(time);
+                                        } else {
+                                          cancelNotification(time);
+                                        }
                                       },
                                       onDoubleTap: () {},
                                       onSwipe: () {},
@@ -197,6 +228,7 @@ class _AlarmPageState extends State<AlarmPage> {
                                 child: const Text("Cancel")),
                             TextButton(
                                 onPressed: (() {
+                                  now = DateTime.now();
                                   triggerNotification(int.parse(hour + minute));
                                   Navigator.pop(context);
                                   alarmService.setAlarm([

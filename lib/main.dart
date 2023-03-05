@@ -19,6 +19,8 @@ class _AlarmPlusState extends State<AlarmPlus> {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
+
+    AwesomeNotifications().cancelAll();
     super.initState();
   }
 
@@ -39,12 +41,15 @@ class _AlarmPlusState extends State<AlarmPlus> {
 }
 
 void main() {
-  AwesomeNotifications().initialize(null, [
-    NotificationChannel(
-        channelKey: 'basic_channel',
-        channelName: 'Basic notifications',
-        channelDescription: 'Notification channel for basic tests')
-  ],debug: true);
+  AwesomeNotifications().initialize(
+      null,
+      [
+        NotificationChannel(
+            channelKey: 'scheduled',
+            channelName: 'Basic notifications',
+            channelDescription: 'Notification channel for basic tests')
+      ],
+      debug: true);
   runApp(ChangeNotifierProvider(
     create: (_) => AlarmService(),
     child: const AlarmPlus(),
