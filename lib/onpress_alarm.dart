@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AlarmPress extends StatefulWidget {
-  final String oldTime;
+  final int oldTime;
   final VoidCallback pressEdit;
   const AlarmPress({super.key, required this.oldTime, required this.pressEdit});
 
@@ -112,17 +112,18 @@ class _AlarmPressState extends State<AlarmPress> {
                             true,
                             int.parse(hour + minute)
                           ])) {
-                            alarmService.alarmItem[alarmService.getKey([
-                              widget.oldTime,
-                              true,
-                              int.parse(widget.oldTime.replaceAll(":", ""))
-                            ])]![0] = "${hour}:${minute}";
-                            alarmService.alarmItem[alarmService.getKey([
-                              "${hour}:${minute}",
-                              true,
-                              int.parse(widget.oldTime.replaceAll(":", ""))
-                            ])]![2] = int.parse(hour + minute);
+                            cancelNotification(
+                                alarmService.alarmItem[widget.oldTime]![2]);
+
+                            alarmService.alarmItem[widget.oldTime]![0] =
+                                "${hour}:${minute}";
+                            alarmService.alarmItem[widget.oldTime]![2] =
+                                int.parse(hour + minute);
+
+                            triggerNotification(int.parse(hour + minute));
+                            alarmService.turnOn(widget.oldTime);
                           }
+
                           alarmService.sortListAlarm();
                           widget.pressEdit();
                           Navigator.pop(context);

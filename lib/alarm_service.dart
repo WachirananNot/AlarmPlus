@@ -21,6 +21,10 @@ class AlarmService extends ChangeNotifier {
     return color;
   }
 
+  void turnOn(int index) {
+    alarmItem[index]![1] = true;
+  }
+
   void turnOff(int index) {
     alarmItem[index]![1] = !alarmItem[index]![1];
   }

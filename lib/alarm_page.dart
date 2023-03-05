@@ -112,7 +112,7 @@ class _AlarmPageState extends State<AlarmPage> {
                                 MaterialPageRoute(
                                     builder: (_) => AlarmPress(
                                           oldTime:
-                                              alarmService.alarmItem[index]![0],
+                                              index,
                                           pressEdit: pressEdit,
                                         )));
                             setState(() {});
