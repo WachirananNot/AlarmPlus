@@ -1,5 +1,7 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
+import 'dart:html';
+
 import 'package:alarmplus/alarm_service.dart';
 import 'package:alarmplus/onpress_alarm.dart';
 import 'package:alarmplus/time_picker.dart';
@@ -47,13 +49,18 @@ class _AlarmPageState extends State<AlarmPage> {
             channelKey: 'scheduled',
             title: 'Test Notification of $index',
             body: 'Test',
+            wakeUpScreen: true,
           ),
           schedule: NotificationCalendar(
               hour: hour,
               minute: minute,
               second: 0,
               timeZone: localTimeZone,
-              repeats: true));
+              repeats: true),
+          actionButtons: [
+            NotificationActionButton(key: 'yes', label: 'Yes'),
+            NotificationActionButton(key: 'no', label: 'No'),
+          ]);
     }
 
     void cancelNotification(int index) {
@@ -111,8 +118,7 @@ class _AlarmPageState extends State<AlarmPage> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => AlarmPress(
-                                          oldTime:
-                                              index,
+                                          oldTime: index,
                                           pressEdit: pressEdit,
                                         )));
                             setState(() {});
