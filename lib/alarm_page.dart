@@ -3,6 +3,7 @@
 import 'package:alarmplus/alarm_service.dart';
 import 'package:alarmplus/onpress_alarm.dart';
 import 'package:alarmplus/time_picker.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:provider/provider.dart';
@@ -30,6 +31,15 @@ class _AlarmPageState extends State<AlarmPage> {
 
     void pressEdit() {
       setState(() {});
+    }
+
+    void triggerNotification(int index) {
+      AwesomeNotifications().createNotification(
+          content: NotificationContent(
+              id: index,
+              channelKey: 'basic_channel',
+              title: 'Test Notification of $index',
+              body: 'Test'));
     }
 
     return Consumer<AlarmService>(
@@ -187,9 +197,13 @@ class _AlarmPageState extends State<AlarmPage> {
                                 child: const Text("Cancel")),
                             TextButton(
                                 onPressed: (() {
+                                  triggerNotification(int.parse(hour + minute));
                                   Navigator.pop(context);
-                                  alarmService
-                                      .setAlarm(["${hour}:${minute}", true, int.parse(hour+minute)]);
+                                  alarmService.setAlarm([
+                                    "${hour}:${minute}",
+                                    true,
+                                    int.parse(hour + minute)
+                                  ]);
                                   setState(() {
                                     hour = "00";
                                     minute = "00";

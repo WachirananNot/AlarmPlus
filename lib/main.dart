@@ -1,5 +1,6 @@
 import 'package:alarmplus/alarm_service.dart';
 import 'package:alarmplus/bottom_navigation.dart';
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,16 @@ class AlarmPlus extends StatefulWidget {
 }
 
 class _AlarmPlusState extends State<AlarmPlus> {
+  @override
+  void initState() {
+    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+      if (!isAllowed) {
+        AwesomeNotifications().requestPermissionToSendNotifications();
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<AlarmService>(builder: (_, alarmService, __) {
@@ -28,10 +39,14 @@ class _AlarmPlusState extends State<AlarmPlus> {
 }
 
 void main() {
+  AwesomeNotifications().initialize(null, [
+    NotificationChannel(
+        channelKey: 'basic_channel',
+        channelName: 'Basic notifications',
+        channelDescription: 'Notification channel for basic tests')
+  ],debug: true);
   runApp(ChangeNotifierProvider(
-    create: (_) =>
-        AlarmService(), 
+    create: (_) => AlarmService(),
     child: const AlarmPlus(),
   ));
 }
-
