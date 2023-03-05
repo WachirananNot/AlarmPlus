@@ -43,12 +43,13 @@ class _AlarmPageState extends State<AlarmPage> {
 
       AwesomeNotifications().createNotification(
           content: NotificationContent(
-            id: index,
-            channelKey: 'scheduled',
-            title: 'Test Notification of $index',
-            body: 'Test',
-            wakeUpScreen: true,
-          ),
+              id: index,
+              channelKey: 'scheduled',
+              title: 'Test Notification of $index',
+              body: 'Test',
+              wakeUpScreen: true,
+              notificationLayout: NotificationLayout.BigPicture,
+              bigPicture: 'asset://assets/problem/problem1.png'),
           schedule: NotificationCalendar(
               hour: hour,
               minute: minute,
