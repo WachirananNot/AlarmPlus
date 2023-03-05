@@ -1,7 +1,5 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
-import 'dart:html';
-
 import 'package:alarmplus/alarm_service.dart';
 import 'package:alarmplus/onpress_alarm.dart';
 import 'package:alarmplus/time_picker.dart';
