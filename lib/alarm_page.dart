@@ -19,7 +19,6 @@ class _AlarmPageState extends State<AlarmPage> {
   String hour = "00";
   String minute = "00";
   String currentTime = "";
-  
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +34,7 @@ class _AlarmPageState extends State<AlarmPage> {
       setState(() {});
     }
 
-    
-
     // create notification on that time
-    
-
-    
 
     DateTime now = DateTime.now();
 
@@ -50,8 +44,8 @@ class _AlarmPageState extends State<AlarmPage> {
           backgroundColor: alarmService.subColor,
           appBar: AppBar(
               title: Center(
-            child: Text("${now.day}-${now.hour}-${now.minute}",
-                style: const TextStyle(color: Colors.white)),
+            child:
+                Text("Alarm Plus", style: const TextStyle(color: Colors.white)),
           )),
           body: Center(
             child: alarmService.alarmItem.isEmpty
@@ -126,7 +120,8 @@ class _AlarmPageState extends State<AlarmPage> {
                                         int time =
                                             alarmService.alarmItem[index]![2];
                                         if (alarmService.alarmItem[index]![1]) {
-                                          alarmService.triggerNotification(time);
+                                          alarmService
+                                              .triggerNotification(time);
                                         } else {
                                           alarmService.cancelNotification(time);
                                         }
@@ -210,7 +205,8 @@ class _AlarmPageState extends State<AlarmPage> {
                             TextButton(
                                 onPressed: (() {
                                   now = DateTime.now();
-                                  alarmService.triggerNotification(int.parse(hour + minute));
+                                  alarmService.triggerNotification(
+                                      int.parse(hour + minute));
                                   Navigator.pop(context);
                                   alarmService.setAlarm([
                                     "${hour}:${minute}",

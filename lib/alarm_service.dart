@@ -48,7 +48,7 @@ class AlarmService extends ChangeNotifier {
           channelKey: 'scheduled',
           customSound: "asset://sound/alarm-clock-short-6402.mp3",
           locked: true,
-          title: 'Test Notification of $index',
+          title: 'Wake Up!',
           body: 'Test',
           wakeUpScreen: true,
           notificationLayout: NotificationLayout.BigPicture,
@@ -72,8 +72,6 @@ class AlarmService extends ChangeNotifier {
               autoDismissible: true,
               actionType: ActionType.DisabledAction,
               isDangerousOption: true),
-          
-          
         ]);
   }
 
