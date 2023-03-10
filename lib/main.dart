@@ -45,9 +45,11 @@ void main() {
       null,
       [
         NotificationChannel(
-            channelKey: 'scheduled',
-            channelName: 'Basic notifications',
-            channelDescription: 'Notification channel for basic tests')
+          channelKey: 'scheduled',
+          channelName: 'Basic notifications',
+          channelDescription: 'Notification channel for basic tests',
+          importance: NotificationImportance.Max,
+        ),
       ],
       debug: true);
   runApp(ChangeNotifierProvider(

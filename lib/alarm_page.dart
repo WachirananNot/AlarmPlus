@@ -72,7 +72,14 @@ class _AlarmPageState extends State<AlarmPage> {
               repeats: true),
           actionButtons: [
             NotificationActionButton(key: 'yes', label: 'Yes'),
-            NotificationActionButton(key: 'no', label: 'No'),
+            NotificationActionButton(
+                key: 'Text', label: 'Text', requireInputText: true),
+            NotificationActionButton(
+                key: 'DISMISS',
+                label: 'Dismiss',
+                autoDismissible: true,
+                actionType: ActionType.DisabledAction,
+                isDangerousOption: true)
           ]);
     }
 
