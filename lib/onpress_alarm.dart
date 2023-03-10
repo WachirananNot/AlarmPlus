@@ -26,27 +26,7 @@ class _AlarmPressState extends State<AlarmPress> {
     minute = value < 10 ? '0$value' : value.toString();
   }
 
-  void triggerNotification(int index) async {
-    String localTimeZone =
-        await AwesomeNotifications().getLocalTimeZoneIdentifier();
-
-    int hour = (index ~/ 100);
-    int minute = (index % 100);
-
-    AwesomeNotifications().createNotification(
-        content: NotificationContent(
-          id: index,
-          channelKey: 'scheduled',
-          title: 'Test Notification of $index',
-          body: 'Test',
-        ),
-        schedule: NotificationCalendar(
-            hour: hour,
-            minute: minute,
-            second: 0,
-            timeZone: localTimeZone,
-            repeats: true));
-  }
+  
 
   void cancelNotification(int index) {
     AwesomeNotifications().cancel(index);
@@ -120,7 +100,7 @@ class _AlarmPressState extends State<AlarmPress> {
                             alarmService.alarmItem[widget.oldTime]![2] =
                                 int.parse(hour + minute);
 
-                            triggerNotification(int.parse(hour + minute));
+                            alarmService.triggerNotification(int.parse(hour + minute));
                             alarmService.turnOn(widget.oldTime);
                           }
 

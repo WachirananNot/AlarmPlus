@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
 class AlarmService extends ChangeNotifier {
@@ -5,6 +8,13 @@ class AlarmService extends ChangeNotifier {
   late MaterialColor subColor;
   late Map<int, List<dynamic>> alarmItem = {};
   late int index = 0;
+  List<String> problems = [
+    'asset://assets/problem/1.png',
+    'asset://assets/problem/2.png',
+    'asset://assets/problem/3.png',
+    'asset://assets/problem/4.png',
+    'asset://assets/problem/5.png'
+  ];
   MaterialColor changeColorCode(int hexColor) {
     color = MaterialColor(hexColor, const <int, Color>{
       50: Color.fromRGBO(238, 129, 48, .1),
@@ -19,6 +29,58 @@ class AlarmService extends ChangeNotifier {
       900: Color.fromRGBO(238, 129, 48, 1),
     });
     return color;
+  }
+
+  void cancelNotification(int index) {
+    AwesomeNotifications().cancel(index);
+  }
+
+  void triggerNotification(int index) async {
+    String localTimeZone =
+        await AwesomeNotifications().getLocalTimeZoneIdentifier();
+
+    int hour = (index ~/ 100);
+    int minute = (index % 100);
+    String pic = await randomPic();
+    AwesomeNotifications().createNotification(
+        content: NotificationContent(
+          id: index,
+          channelKey: 'scheduled',
+          customSound: "asset://sound/alarm-clock-short-6402.mp3",
+          locked: true,
+          title: 'Test Notification of $index',
+          body: 'Test',
+          wakeUpScreen: true,
+          notificationLayout: NotificationLayout.BigPicture,
+          fullScreenIntent: true,
+          bigPicture: pic,
+          autoDismissible: false,
+        ),
+        schedule: NotificationCalendar(
+            hour: hour,
+            minute: minute,
+            second: 0,
+            timeZone: localTimeZone,
+            repeats: true),
+        actionButtons: [
+          NotificationActionButton(key: 'yes', label: 'Yes'),
+          NotificationActionButton(
+              key: 'Text', label: 'Text', requireInputText: true),
+          NotificationActionButton(
+              key: 'DISMISS',
+              label: 'Dismiss',
+              autoDismissible: true,
+              actionType: ActionType.DisabledAction,
+              isDangerousOption: true),
+          
+          
+        ]);
+  }
+
+  Future<String> randomPic() async {
+    int randomNumber = Random().nextInt(problems.length);
+    String selectedPic = problems[randomNumber];
+    return selectedPic;
   }
 
   void turnOn(int index) {

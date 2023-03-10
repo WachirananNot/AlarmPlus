@@ -19,13 +19,7 @@ class _AlarmPageState extends State<AlarmPage> {
   String hour = "00";
   String minute = "00";
   String currentTime = "";
-  List<String> problems = [
-    'asset://assets/problem/1.png',
-    'asset://assets/problem/2.png',
-    'asset://assets/problem/3.png',
-    'asset://assets/problem/4.png',
-    'asset://assets/problem/5.png'
-  ];
+  
 
   @override
   Widget build(BuildContext context) {
@@ -41,51 +35,12 @@ class _AlarmPageState extends State<AlarmPage> {
       setState(() {});
     }
 
-    Future<String> randomPic() async {
-      int randomNumber = Random().nextInt(problems.length);
-      String selectedPic = problems[randomNumber];
-      return selectedPic;
-    }
+    
 
     // create notification on that time
-    void triggerNotification(int index) async {
-      String localTimeZone =
-          await AwesomeNotifications().getLocalTimeZoneIdentifier();
+    
 
-      int hour = (index ~/ 100);
-      int minute = (index % 100);
-      String pic = await randomPic();
-      AwesomeNotifications().createNotification(
-          content: NotificationContent(
-              id: index,
-              channelKey: 'scheduled',
-              title: 'Test Notification of $index',
-              body: 'Test',
-              wakeUpScreen: true,
-              notificationLayout: NotificationLayout.BigPicture,
-              bigPicture: pic),
-          schedule: NotificationCalendar(
-              hour: hour,
-              minute: minute,
-              second: 0,
-              timeZone: localTimeZone,
-              repeats: true),
-          actionButtons: [
-            NotificationActionButton(key: 'yes', label: 'Yes'),
-            NotificationActionButton(
-                key: 'Text', label: 'Text', requireInputText: true),
-            NotificationActionButton(
-                key: 'DISMISS',
-                label: 'Dismiss',
-                autoDismissible: true,
-                actionType: ActionType.DisabledAction,
-                isDangerousOption: true)
-          ]);
-    }
-
-    void cancelNotification(int index) {
-      AwesomeNotifications().cancel(index);
-    }
+    
 
     DateTime now = DateTime.now();
 
@@ -124,7 +79,7 @@ class _AlarmPageState extends State<AlarmPage> {
                         onDismissed: (direction) {
                           setState(() {
                             currentTime = alarmService.alarmItem[index]![0];
-                            cancelNotification(
+                            alarmService.cancelNotification(
                                 alarmService.alarmItem[index]![2]);
                             setState(() {
                               alarmService.delAlarm(currentTime);
@@ -171,9 +126,9 @@ class _AlarmPageState extends State<AlarmPage> {
                                         int time =
                                             alarmService.alarmItem[index]![2];
                                         if (alarmService.alarmItem[index]![1]) {
-                                          triggerNotification(time);
+                                          alarmService.triggerNotification(time);
                                         } else {
-                                          cancelNotification(time);
+                                          alarmService.cancelNotification(time);
                                         }
                                       },
                                       onDoubleTap: () {},
@@ -255,7 +210,7 @@ class _AlarmPageState extends State<AlarmPage> {
                             TextButton(
                                 onPressed: (() {
                                   now = DateTime.now();
-                                  triggerNotification(int.parse(hour + minute));
+                                  alarmService.triggerNotification(int.parse(hour + minute));
                                   Navigator.pop(context);
                                   alarmService.setAlarm([
                                     "${hour}:${minute}",

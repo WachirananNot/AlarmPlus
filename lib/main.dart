@@ -45,6 +45,9 @@ void main() {
       null,
       [
         NotificationChannel(
+          criticalAlerts: true,
+          playSound: true,
+          soundSource: "",
           channelKey: 'scheduled',
           channelName: 'Basic notifications',
           channelDescription: 'Notification channel for basic tests',
