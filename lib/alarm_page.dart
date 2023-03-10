@@ -1,5 +1,5 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
-
+import 'dart:math';
 import 'package:alarmplus/alarm_service.dart';
 import 'package:alarmplus/onpress_alarm.dart';
 import 'package:alarmplus/time_picker.dart';
@@ -19,6 +19,14 @@ class _AlarmPageState extends State<AlarmPage> {
   String hour = "00";
   String minute = "00";
   String currentTime = "";
+  List<String> problems = [
+    'asset://assets/problem/1.png',
+    'asset://assets/problem/2.png',
+    'asset://assets/problem/3.png',
+    'asset://assets/problem/4.png',
+    'asset://assets/problem/5.png'
+  ];
+
   @override
   Widget build(BuildContext context) {
     void onHourChange(int value) {
@@ -33,6 +41,12 @@ class _AlarmPageState extends State<AlarmPage> {
       setState(() {});
     }
 
+    Future<String> randomPic() async {
+      int randomNumber = Random().nextInt(problems.length);
+      String selectedPic = problems[randomNumber];
+      return selectedPic;
+    }
+
     // create notification on that time
     void triggerNotification(int index) async {
       String localTimeZone =
@@ -40,7 +54,7 @@ class _AlarmPageState extends State<AlarmPage> {
 
       int hour = (index ~/ 100);
       int minute = (index % 100);
-
+      String pic = await randomPic();
       AwesomeNotifications().createNotification(
           content: NotificationContent(
               id: index,
@@ -49,7 +63,7 @@ class _AlarmPageState extends State<AlarmPage> {
               body: 'Test',
               wakeUpScreen: true,
               notificationLayout: NotificationLayout.BigPicture,
-              bigPicture: 'asset://assets/problem/problem1.png'),
+              bigPicture: pic),
           schedule: NotificationCalendar(
               hour: hour,
               minute: minute,
