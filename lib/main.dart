@@ -12,6 +12,7 @@ class AlarmPlus extends StatefulWidget {
 }
 
 class _AlarmPlusState extends State<AlarmPlus> {
+  late NotificationController notificationController;
   @override
   void initState() {
     AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
@@ -19,10 +20,13 @@ class _AlarmPlusState extends State<AlarmPlus> {
         AwesomeNotifications().requestPermissionToSendNotifications();
       }
     });
-
+    notificationController = NotificationController(
+        Provider.of<AlarmService>(context, listen: false));
     AwesomeNotifications().cancelAll();
     AwesomeNotifications().setListeners(
-        onActionReceivedMethod: NotificationController.onActionReceivedMethod,
+        onActionReceivedMethod: ((receivedAction) =>
+            NotificationController.onActionReceivedMethod(
+                receivedAction, notificationController)),
         onNotificationCreatedMethod:
             NotificationController.onNotificationCreatedMethod,
         onNotificationDisplayedMethod:
@@ -49,12 +53,13 @@ class _AlarmPlusState extends State<AlarmPlus> {
 }
 
 class NotificationController {
+  late final AlarmService alarmService;
+  NotificationController(this.alarmService);
+
   /// Use this method to detect when a new notification or a schedule is created
   @pragma("vm:entry-point")
   static Future<void> onNotificationCreatedMethod(
-      ReceivedNotification receivedNotification) async {
-    // Your code goes here
-  }
+      ReceivedNotification receivedNotification) async {}
 
   /// Use this method to detect every time that a new notification is displayed
   @pragma("vm:entry-point")
@@ -66,15 +71,20 @@ class NotificationController {
   /// Use this method to detect if the user dismissed a notification
   @pragma("vm:entry-point")
   static Future<void> onDismissActionReceivedMethod(
-      ReceivedAction receivedAction) async {
-    // Your code goes here
-  }
+      ReceivedAction receivedAction) async {}
 
   /// Use this method to detect when the user taps on a notification or action button
   @pragma("vm:entry-point")
-  static Future<void> onActionReceivedMethod(
-      ReceivedAction receivedAction) async {
-    print(receivedAction.buttonKeyInput);
+  static Future<void> onActionReceivedMethod(ReceivedAction receivedAction,
+      NotificationController notificationController) async {
+    Map<int, List<dynamic>> alarmItem =
+        notificationController.alarmService.alarmItem;
+    print(alarmItem);
+    if (notificationController.alarmService.getResult() ==
+        receivedAction.buttonKeyInput) {
+      print("Equal");
+      
+    }
   }
 }
 

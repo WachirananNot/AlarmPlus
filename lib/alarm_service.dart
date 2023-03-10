@@ -8,6 +8,8 @@ class AlarmService extends ChangeNotifier {
   late MaterialColor subColor;
   late Map<int, List<dynamic>> alarmItem = {};
   late int index = 0;
+  late int time;
+  late int randomNumber;
   List<String> problems = [
     'asset://assets/problem/1.png',
     'asset://assets/problem/2.png',
@@ -15,6 +17,7 @@ class AlarmService extends ChangeNotifier {
     'asset://assets/problem/4.png',
     'asset://assets/problem/5.png'
   ];
+  List<String> ans = ["24", "18", "10", "18", "55"];
   MaterialColor changeColorCode(int hexColor) {
     color = MaterialColor(hexColor, const <int, Color>{
       50: Color.fromRGBO(238, 129, 48, .1),
@@ -35,13 +38,19 @@ class AlarmService extends ChangeNotifier {
     AwesomeNotifications().cancel(index);
   }
 
+  int getTime() {
+    return time;
+  }
+
   void triggerNotification(int index) async {
+    time = index;
     String localTimeZone =
         await AwesomeNotifications().getLocalTimeZoneIdentifier();
 
     int hour = (index ~/ 100);
     int minute = (index % 100);
     String pic = await randomPic();
+    
     AwesomeNotifications().createNotification(
         content: NotificationContent(
           id: index,
@@ -75,8 +84,12 @@ class AlarmService extends ChangeNotifier {
         ]);
   }
 
+  String getResult() {
+    return ans[randomNumber];
+  }
+
   Future<String> randomPic() async {
-    int randomNumber = Random().nextInt(problems.length);
+    randomNumber = Random().nextInt(problems.length);
     String selectedPic = problems[randomNumber];
     return selectedPic;
   }
