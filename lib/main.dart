@@ -65,13 +65,16 @@ class NotificationController {
   @pragma("vm:entry-point")
   static Future<void> onNotificationDisplayedMethod(
       ReceivedNotification receivedNotification) async {
+    print("Notification is showned up");
     // Your code goes here
   }
 
   /// Use this method to detect if the user dismissed a notification
   @pragma("vm:entry-point")
   static Future<void> onDismissActionReceivedMethod(
-      ReceivedAction receivedAction) async {}
+      ReceivedAction receivedAction) async {
+    // AwesomeNotifications().dismiss();
+  }
 
   /// Use this method to detect when the user taps on a notification or action button
   @pragma("vm:entry-point")
@@ -82,8 +85,8 @@ class NotificationController {
     print(alarmItem);
     if (notificationController.alarmService.getResult() ==
         receivedAction.buttonKeyInput) {
+      AwesomeNotifications().dismissAllNotifications();
       print("Equal");
-      
     }
   }
 }

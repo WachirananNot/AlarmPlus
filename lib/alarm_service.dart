@@ -50,7 +50,7 @@ class AlarmService extends ChangeNotifier {
     int hour = (index ~/ 100);
     int minute = (index % 100);
     String pic = await randomPic();
-    
+
     AwesomeNotifications().createNotification(
         content: NotificationContent(
           id: index,
@@ -72,13 +72,12 @@ class AlarmService extends ChangeNotifier {
             timeZone: localTimeZone,
             repeats: true),
         actionButtons: [
-          NotificationActionButton(key: 'yes', label: 'Yes'),
           NotificationActionButton(
-              key: 'Text', label: 'Text', requireInputText: true),
+              key: 'Text', label: 'Send answer', requireInputText: true),
           NotificationActionButton(
               key: 'DISMISS',
               label: 'Dismiss',
-              autoDismissible: true,
+              autoDismissible: false,
               actionType: ActionType.DisabledAction,
               isDangerousOption: true),
         ]);
