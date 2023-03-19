@@ -29,8 +29,9 @@ class _AlarmPlusState extends State<AlarmPlus> {
                 receivedAction, notificationController)),
         onNotificationCreatedMethod:
             NotificationController.onNotificationCreatedMethod,
-        onNotificationDisplayedMethod:
-            NotificationController.onNotificationDisplayedMethod,
+        onNotificationDisplayedMethod: ((receivedNotification) =>
+            NotificationController.onNotificationDisplayedMethod(
+                receivedNotification, notificationController)),
         onDismissActionReceivedMethod:
             NotificationController.onDismissActionReceivedMethod);
     super.initState();
@@ -64,9 +65,10 @@ class NotificationController {
   /// Use this method to detect every time that a new notification is displayed
   @pragma("vm:entry-point")
   static Future<void> onNotificationDisplayedMethod(
-      ReceivedNotification receivedNotification) async {
-    print("Notification is showned up");
-    // Your code goes here
+      ReceivedNotification receivedNotification,
+      NotificationController notificationController) async {
+    print("Notification is showned up and play sound");
+    await notificationController.alarmService.startAudio();
   }
 
   /// Use this method to detect if the user dismissed a notification
@@ -87,6 +89,7 @@ class NotificationController {
         receivedAction.buttonKeyInput) {
       AwesomeNotifications().dismissAllNotifications();
       print("Equal");
+      notificationController.alarmService.stopAudio();
     }
   }
 }

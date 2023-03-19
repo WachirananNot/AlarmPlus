@@ -1,9 +1,12 @@
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class AlarmService extends ChangeNotifier {
+  late AudioPlayer player = AudioPlayer();
   late MaterialColor color;
   late MaterialColor subColor;
   late Map<int, List<dynamic>> alarmItem = {};
@@ -32,6 +35,34 @@ class AlarmService extends ChangeNotifier {
       900: Color.fromRGBO(238, 129, 48, 1),
     });
     return color;
+  }
+
+  Future<void> stopAudio() async {
+    int result = await player.stop();
+
+    // You can pasue the player
+    // int result = await player.pause();
+
+    if (result == 1) {
+      //stop success
+      print("Sound playing stopped successfully.");
+    } else {
+      print("Error on while stopping sound.");
+    }
+  }
+
+  Future<void> startAudio() async {
+    String audioasset = "assets/sound/alarm1.mp3";
+    ByteData bytes = await rootBundle.load(audioasset); //load sound from assets
+    Uint8List soundbytes =
+        bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+    int result = await player.playBytes(soundbytes);
+    if (result == 1) {
+      //play success
+      print("Sound playing successful.");
+    } else {
+      print("Error while playing sound.");
+    }
   }
 
   void cancelNotification(int index) {
