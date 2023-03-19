@@ -13,6 +13,7 @@ class AlarmService extends ChangeNotifier {
   late int index = 0;
   late int time;
   late int randomNumber;
+  late int reward = 100;
   List<String> problems = [
     'asset://assets/problem/1.png',
     'asset://assets/problem/2.png',

@@ -17,8 +17,21 @@ class _ShopPageState extends State<ShopPage> {
         return Scaffold(
             backgroundColor: alarmService.subColor,
             appBar: AppBar(
-                title: const Center(
-              child: Text('Shop', style: TextStyle(color: Colors.white)),
+                title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text('Shop', style: TextStyle(color: Colors.white)),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.attach_money,
+                      color: Colors.yellow,
+                    ),
+                    Text(alarmService.reward.toString(),
+                        style: TextStyle(color: Colors.yellow))
+                  ],
+                )
+              ],
             )),
             body: DefaultTabController(
               initialIndex: 0,
