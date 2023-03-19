@@ -89,7 +89,7 @@ class NotificationController {
         receivedAction.buttonKeyInput) {
       AwesomeNotifications().dismissAllNotifications();
       print("Equal");
-      notificationController.alarmService.stopAudio();
+      await notificationController.alarmService.stopAudio();
     }
   }
 }
