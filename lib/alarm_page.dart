@@ -19,6 +19,7 @@ class _AlarmPageState extends State<AlarmPage> {
   String hour = "00";
   String minute = "00";
   String currentTime = "";
+  final nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +35,13 @@ class _AlarmPageState extends State<AlarmPage> {
       setState(() {});
     }
 
+    void setNewName(String newName) {
+      nameController.text = "newName";
+    }
     // create notification on that time
 
     DateTime now = DateTime.now();
-
+    nameController.text = "Default";
     return Consumer<AlarmService>(
       builder: (_, alarmService, __) {
         return Scaffold(
@@ -161,7 +165,12 @@ class _AlarmPageState extends State<AlarmPage> {
                                       Text("Sound"),
                                     ],
                                   ),
-                                  const Text("Default")
+                                  TextButton(
+                                      onPressed: () {},
+                                      style: TextButton.styleFrom(
+                                        foregroundColor: Colors.black,
+                                      ),
+                                      child: const Text("Default"))
                                 ],
                               ),
                               const Padding(
@@ -191,7 +200,12 @@ class _AlarmPageState extends State<AlarmPage> {
                                       Text("Name"),
                                     ],
                                   ),
-                                  const Text("First Alarm")
+                                  TextButton(
+                                      onPressed: () {},
+                                      style: TextButton.styleFrom(
+                                        foregroundColor: Colors.black,
+                                      ),
+                                      child: Text(nameController.text)),
                                 ],
                               )
                             ]),
