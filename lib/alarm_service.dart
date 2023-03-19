@@ -18,9 +18,45 @@ class AlarmService extends ChangeNotifier {
     'asset://assets/problem/2.png',
     'asset://assets/problem/3.png',
     'asset://assets/problem/4.png',
-    'asset://assets/problem/5.png'
+    'asset://assets/problem/5.png',
+    'asset://assets/problem/6.png',
+    'asset://assets/problem/7.png',
+    'asset://assets/problem/8.png',
+    'asset://assets/problem/9.png',
+    'asset://assets/problem/10.png',
+    'asset://assets/problem/11.png',
+    'asset://assets/problem/12.png',
+    'asset://assets/problem/13.png',
+    'asset://assets/problem/14.png',
+    'asset://assets/problem/15.png',
+    'asset://assets/problem/16.png',
+    'asset://assets/problem/17.png',
+    'asset://assets/problem/18.png',
+    'asset://assets/problem/19.png',
+    'asset://assets/problem/20.png'
   ];
-  List<String> ans = ["24", "18", "10", "18", "55"];
+  List<String> ans = [
+    "24",
+    "18",
+    "10",
+    "18",
+    "55",
+    "31",
+    "366",
+    "12",
+    "6",
+    "8",
+    "40",
+    "7",
+    "7",
+    "8",
+    "11",
+    "7",
+    "5",
+    "6",
+    "52",
+    "4"
+  ];
   MaterialColor changeColorCode(int hexColor) {
     color = MaterialColor(hexColor, const <int, Color>{
       50: Color.fromRGBO(238, 129, 48, .1),
