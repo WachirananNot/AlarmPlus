@@ -30,7 +30,7 @@ class _SettingPageState extends State<SettingPage> {
                   children: [
                     ElevatedButton.icon(
                         onPressed: () async {
-                          String audioasset = "assets/sound/alarm1.mp3";
+                          String audioasset = "assets/sound/P.mp3";
                           ByteData bytes = await rootBundle
                               .load(audioasset); //load sound from assets
                           Uint8List soundbytes = bytes.buffer.asUint8List(
