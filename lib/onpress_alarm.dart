@@ -9,7 +9,12 @@ import 'package:provider/provider.dart';
 class AlarmPress extends StatefulWidget {
   final int oldTime;
   final VoidCallback pressEdit;
-  const AlarmPress({super.key, required this.oldTime, required this.pressEdit});
+  final String oldName;
+  const AlarmPress(
+      {super.key,
+      required this.oldTime,
+      required this.pressEdit,
+      required this.oldName});
 
   @override
   State<AlarmPress> createState() => _AlarmPressState();
@@ -25,8 +30,6 @@ class _AlarmPressState extends State<AlarmPress> {
   void onMinuteChange(int value) {
     minute = value < 10 ? '0$value' : value.toString();
   }
-
-  
 
   void cancelNotification(int index) {
     AwesomeNotifications().cancel(index);
@@ -79,7 +82,7 @@ class _AlarmPressState extends State<AlarmPress> {
                     Text("Name"),
                   ],
                 ),
-                const Text("First Alarm")
+                Text(widget.oldName)
               ],
             ),
             Expanded(
@@ -100,7 +103,8 @@ class _AlarmPressState extends State<AlarmPress> {
                             alarmService.alarmItem[widget.oldTime]![2] =
                                 int.parse(hour + minute);
 
-                            alarmService.triggerNotification(int.parse(hour + minute));
+                            alarmService.triggerNotification(
+                                int.parse(hour + minute), widget.oldName);
                             alarmService.turnOn(widget.oldTime);
                           }
 
