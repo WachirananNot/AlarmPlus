@@ -5,7 +5,6 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'main.dart';
 
 class AlarmService extends ChangeNotifier {
   late AudioPlayer player = AudioPlayer();
@@ -17,6 +16,7 @@ class AlarmService extends ChangeNotifier {
   late int randomNumber;
   late int reward = 100;
   late int currentReward = 30;
+  late bool isCorrect = false;
   List<String> problems = [
     'asset://assets/problem/1.png',
     'asset://assets/problem/2.png',
@@ -77,9 +77,10 @@ class AlarmService extends ChangeNotifier {
     return color;
   }
 
-  void updateReward() {
+  Future<void> updateReward() async {
     reward += currentReward;
     currentReward = 30;
+    isCorrect = true;
     notifyListeners();
   }
 
