@@ -67,6 +67,7 @@ class NotificationController {
   static Future<void> onNotificationDisplayedMethod(
       ReceivedNotification receivedNotification,
       NotificationController notificationController) async {
+    notificationController.alarmService.isCorrect = false;
     print("Notification is showned up and play sound");
     await notificationController.alarmService.startAudio();
   }
@@ -92,12 +93,15 @@ class NotificationController {
         AwesomeNotifications().dismissAllNotifications();
         print("Equal");
         await notificationController.alarmService.stopAudio();
-        notificationController.alarmService.updateReward();
+        await notificationController.alarmService.updateReward();
         print(notificationController.alarmService.reward);
       } else {
         notificationController.alarmService.decreaseReward();
         print(notificationController.alarmService.currentReward);
       }
+    }
+    if (notificationController.alarmService.isCorrect) {
+      await notificationController.alarmService.stopAudio();
     }
   }
 }
