@@ -96,6 +96,7 @@ class NotificationController {
         print(notificationController.alarmService.reward);
       } else {
         notificationController.alarmService.decreaseReward();
+        print(notificationController.alarmService.currentReward);
       }
     }
   }

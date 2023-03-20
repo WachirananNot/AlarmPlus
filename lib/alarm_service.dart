@@ -16,6 +16,7 @@ class AlarmService extends ChangeNotifier {
   late int time;
   late int randomNumber;
   late int reward = 100;
+  late int currentReward = 30;
   List<String> problems = [
     'asset://assets/problem/1.png',
     'asset://assets/problem/2.png',
@@ -77,15 +78,16 @@ class AlarmService extends ChangeNotifier {
   }
 
   void updateReward() {
-    reward += 30;
+    reward += currentReward;
+    currentReward = 30;
     notifyListeners();
   }
 
   void decreaseReward() {
-    if (reward - 10 >= 0) {
-      reward = reward - 10;
+    if (currentReward - 10 >= 0) {
+      currentReward = currentReward - 10;
     } else {
-      reward = 0;
+      currentReward = 0;
     }
     notifyListeners();
   }
@@ -105,7 +107,6 @@ class AlarmService extends ChangeNotifier {
   }
 
   Future<void> startAudio() async {
-    player.setReleaseMode(ReleaseMode.LOOP);
     String audioasset = "assets/sound/P.mp3";
     ByteData bytes = await rootBundle.load(audioasset); //load sound from assets
     Uint8List soundbytes =
@@ -127,7 +128,7 @@ class AlarmService extends ChangeNotifier {
     return time;
   }
 
-  void triggerNotification(int index,String name) async {
+  void triggerNotification(int index, String name) async {
     time = index;
     String localTimeZone =
         await AwesomeNotifications().getLocalTimeZoneIdentifier();
