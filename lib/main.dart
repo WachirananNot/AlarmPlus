@@ -40,8 +40,6 @@ class _AlarmPlusState extends State<AlarmPlus> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AlarmService>(builder: (_, alarmService, __) {
-      alarmService.changeSubColorCode(0xffCAC9EE);
-      alarmService.changeColorCode(0xff9E9CF3);
       return MaterialApp(
         title: 'Alarm+',
         theme: ThemeData(
