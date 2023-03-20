@@ -82,18 +82,21 @@ class NotificationController {
   @pragma("vm:entry-point")
   static Future<void> onActionReceivedMethod(ReceivedAction receivedAction,
       NotificationController notificationController) async {
+    print(receivedAction);
     Map<int, List<dynamic>> alarmItem =
         notificationController.alarmService.alarmItem;
     print(alarmItem);
-    if (notificationController.alarmService.getResult() ==
-        receivedAction.buttonKeyInput) {
-      AwesomeNotifications().dismissAllNotifications();
-      print("Equal");
-      await notificationController.alarmService.stopAudio();
-      notificationController.alarmService.updateReward();
-      print(notificationController.alarmService.reward);
-    } else {
-      notificationController.alarmService.decreaseReward();
+    if (receivedAction.buttonKeyInput.length != 0) {
+      if (notificationController.alarmService.getResult() ==
+          receivedAction.buttonKeyInput) {
+        AwesomeNotifications().dismissAllNotifications();
+        print("Equal");
+        await notificationController.alarmService.stopAudio();
+        notificationController.alarmService.updateReward();
+        print(notificationController.alarmService.reward);
+      } else {
+        notificationController.alarmService.decreaseReward();
+      }
     }
   }
 }
