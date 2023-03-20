@@ -19,8 +19,8 @@ class _AlarmPageState extends State<AlarmPage> {
   String hour = "00";
   String minute = "00";
   String currentTime = "";
+  String name = "Default";
   final nameController = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     void onHourChange(int value) {
@@ -35,21 +35,23 @@ class _AlarmPageState extends State<AlarmPage> {
       setState(() {});
     }
 
-    void setNewName(String newName) {
-      nameController.text = "newName";
+    void setName(String newName) {
+      setState(() {
+        name = newName;
+      });
     }
+
     // create notification on that time
 
     DateTime now = DateTime.now();
-    nameController.text = "Default";
+
     return Consumer<AlarmService>(
       builder: (_, alarmService, __) {
         return Scaffold(
           backgroundColor: alarmService.subColor,
           appBar: AppBar(
-              title: Center(
-            child:
-                Text("Alarm Plus", style: const TextStyle(color: Colors.white)),
+              title: const Center(
+            child: Text("Alarm Plus", style: TextStyle(color: Colors.white)),
           )),
           body: Center(
             child: alarmService.alarmItem.isEmpty
@@ -93,6 +95,8 @@ class _AlarmPageState extends State<AlarmPage> {
                                     builder: (_) => AlarmPress(
                                           oldTime: index,
                                           pressEdit: pressEdit,
+                                          oldName:
+                                              alarmService.alarmItem[index]![3],
                                         )));
                             setState(() {});
                           },
@@ -102,7 +106,7 @@ class _AlarmPageState extends State<AlarmPage> {
                               child: Center(
                                 child: ListTile(
                                     title: Text(
-                                      alarmService.alarmItem[index]?[0],
+                                      alarmService.alarmItem[index]![0],
                                       style:
                                           Theme.of(context).textTheme.headline4,
                                     ),
@@ -123,9 +127,11 @@ class _AlarmPageState extends State<AlarmPage> {
 
                                         int time =
                                             alarmService.alarmItem[index]![2];
+                                        String oldname =
+                                            alarmService.alarmItem[index]![3];
                                         if (alarmService.alarmItem[index]![1]) {
-                                          alarmService
-                                              .triggerNotification(time);
+                                          alarmService.triggerNotification(
+                                              time, oldname);
                                         } else {
                                           alarmService.cancelNotification(time);
                                         }
@@ -147,69 +153,111 @@ class _AlarmPageState extends State<AlarmPage> {
                     builder: (context) => AlertDialog(
                           backgroundColor: alarmService.subColor,
                           title: const Text("Add Alarm"),
-                          content: SingleChildScrollView(
-                            child: Column(children: [
-                              TimeScrollPicker(
-                                setHour: onHourChange,
-                                setMinute: onMinuteChange,
-                              ),
-                              const Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 8, 0, 8)),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(Icons.music_note),
-                                      Text("Sound"),
-                                    ],
-                                  ),
-                                  TextButton(
-                                      onPressed: () {},
-                                      style: TextButton.styleFrom(
-                                        foregroundColor: Colors.black,
-                                      ),
-                                      child: const Text("Default"))
-                                ],
-                              ),
-                              const Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 8, 0, 8)),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(Icons.gamepad),
-                                      Text("Mini-Games"),
-                                    ],
-                                  ),
-                                  const Text("Random")
-                                ],
-                              ),
-                              const Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 8, 0, 8)),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: const [
-                                      Icon(Icons.edit),
-                                      Text("Name"),
-                                    ],
-                                  ),
-                                  TextButton(
-                                      onPressed: () {},
-                                      style: TextButton.styleFrom(
-                                        foregroundColor: Colors.black,
-                                      ),
-                                      child: Text(nameController.text)),
-                                ],
-                              )
-                            ]),
-                          ),
+                          content: StatefulBuilder(builder:
+                              (BuildContext context, StateSetter setState) {
+                            return SingleChildScrollView(
+                              child: Column(children: [
+                                TimeScrollPicker(
+                                  setHour: onHourChange,
+                                  setMinute: onMinuteChange,
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 8, 0, 8)),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: const [
+                                        Icon(Icons.music_note),
+                                        Text("Sound"),
+                                      ],
+                                    ),
+                                    TextButton(
+                                        onPressed: () {},
+                                        style: TextButton.styleFrom(
+                                          foregroundColor: Colors.black,
+                                        ),
+                                        child: const Text("Default"))
+                                  ],
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 8, 0, 8)),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: const [
+                                        Icon(Icons.gamepad),
+                                        Text("Mini-Games"),
+                                      ],
+                                    ),
+                                    const Text("Random")
+                                  ],
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 8, 0, 8)),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Row(
+                                      children: const [
+                                        Icon(Icons.edit),
+                                        Text("Name"),
+                                      ],
+                                    ),
+                                    TextButton(
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                    backgroundColor:
+                                                        alarmService.subColor,
+                                                    title: const Text(
+                                                        "Change Name"),
+                                                    content: TextFormField(
+                                                      decoration:
+                                                          const InputDecoration(
+                                                              labelText:
+                                                                  "Enter Alarm Name."),
+                                                      controller:
+                                                          nameController,
+                                                    ),
+                                                    actions: [
+                                                      TextButton(
+                                                          onPressed: (() {
+                                                            Navigator.pop(
+                                                                context);
+                                                          }),
+                                                          child: const Text(
+                                                              "Cancel")),
+                                                      TextButton(
+                                                          onPressed: (() {
+                                                            Navigator.pop(
+                                                                context);
+
+                                                            setState((() {
+                                                              name =
+                                                                  nameController
+                                                                      .text;
+                                                            }));
+                                                          }),
+                                                          child: const Text(
+                                                              "Confirm")),
+                                                    ],
+                                                  ));
+                                        },
+                                        style: TextButton.styleFrom(
+                                          foregroundColor: Colors.black,
+                                        ),
+                                        child: Text(name)),
+                                  ],
+                                )
+                              ]),
+                            );
+                          }),
                           actions: [
                             TextButton(
                                 onPressed: (() {
@@ -220,12 +268,13 @@ class _AlarmPageState extends State<AlarmPage> {
                                 onPressed: (() {
                                   now = DateTime.now();
                                   alarmService.triggerNotification(
-                                      int.parse(hour + minute));
+                                      int.parse(hour + minute), name);
                                   Navigator.pop(context);
                                   alarmService.setAlarm([
                                     "${hour}:${minute}",
                                     true,
-                                    int.parse(hour + minute)
+                                    int.parse(hour + minute),
+                                    name
                                   ]);
                                   setState(() {
                                     hour = "00";

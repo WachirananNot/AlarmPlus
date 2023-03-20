@@ -105,6 +105,7 @@ class AlarmService extends ChangeNotifier {
   }
 
   Future<void> startAudio() async {
+    player.setReleaseMode(ReleaseMode.LOOP);
     String audioasset = "assets/sound/P.mp3";
     ByteData bytes = await rootBundle.load(audioasset); //load sound from assets
     Uint8List soundbytes =
@@ -126,7 +127,7 @@ class AlarmService extends ChangeNotifier {
     return time;
   }
 
-  void triggerNotification(int index) async {
+  void triggerNotification(int index,String name) async {
     time = index;
     String localTimeZone =
         await AwesomeNotifications().getLocalTimeZoneIdentifier();
@@ -141,8 +142,7 @@ class AlarmService extends ChangeNotifier {
           channelKey: 'scheduled',
           customSound: "asset://sound/alarm-clock-short-6402.mp3",
           locked: true,
-          title: 'Wake Up!',
-          body: 'Test',
+          title: name,
           wakeUpScreen: true,
           notificationLayout: NotificationLayout.BigPicture,
           fullScreenIntent: true,
