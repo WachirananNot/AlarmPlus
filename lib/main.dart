@@ -90,6 +90,10 @@ class NotificationController {
       AwesomeNotifications().dismissAllNotifications();
       print("Equal");
       await notificationController.alarmService.stopAudio();
+      notificationController.alarmService.updateReward();
+      print(notificationController.alarmService.reward);
+    } else {
+      notificationController.alarmService.decreaseReward();
     }
   }
 }

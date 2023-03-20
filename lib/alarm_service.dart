@@ -5,6 +5,8 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'main.dart';
+
 class AlarmService extends ChangeNotifier {
   late AudioPlayer player = AudioPlayer();
   late MaterialColor color;
@@ -72,6 +74,20 @@ class AlarmService extends ChangeNotifier {
       900: Color.fromRGBO(238, 129, 48, 1),
     });
     return color;
+  }
+
+  void updateReward() {
+    reward += 30;
+    notifyListeners();
+  }
+
+  void decreaseReward() {
+    if (reward - 10 >= 0) {
+      reward = reward - 10;
+    } else {
+      reward = 0;
+    }
+    notifyListeners();
   }
 
   Future<void> stopAudio() async {
