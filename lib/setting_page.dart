@@ -16,7 +16,14 @@ class SettingPage extends StatefulWidget {
 
 class _SettingPageState extends State<SettingPage> {
   List<String> menu = ["Change Song", "Change Theme"];
-  List<Widget> pages = [const SongList(), const ThemeList()];
+  List<Widget> pages = [
+    const SongList(
+      page: "",
+    ),
+    const ThemeList(
+      page: "",
+    )
+  ];
   @override
   Widget build(BuildContext context) {
     return Consumer<AlarmService>(
