@@ -39,6 +39,7 @@ class _AlarmPressState extends State<AlarmPress> {
   Widget build(BuildContext context) {
     return Consumer<AlarmService>(builder: (_, alarmService, __) {
       return Scaffold(
+        backgroundColor: alarmService.subColor,
         appBar: AppBar(
           title:
               const Text("Edit Alarm", style: TextStyle(color: Colors.white)),

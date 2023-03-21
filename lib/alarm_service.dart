@@ -5,11 +5,10 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
 class AlarmService extends ChangeNotifier {
   late AudioPlayer player = AudioPlayer();
-  late MaterialColor color;
-  late MaterialColor subColor;
+  late MaterialColor color = changeColorCode(0xff9E9CF3);
+  late MaterialColor subColor = changeSubColorCode(0xffCAC9EE);
   late Map<int, List<dynamic>> alarmItem = {};
   late int index = 0;
   late int time;
@@ -17,6 +16,12 @@ class AlarmService extends ChangeNotifier {
   late int reward = 100;
   late int currentReward = 30;
   late bool isCorrect = false;
+  Map<int, List<dynamic>> theme = {
+    0: ["assets/theme/blue.png", 0xff5DBAFE, 0xffC1E1F9],
+    1: ["assets/theme/green.png", 0xff35934F, 0xff83DA9B],
+    2: ["assets/theme/purple.png", 0xff9E9CF3, 0xffCAC9EE],
+    3: ["assets/theme/red.png", 0xffFF8181, 0xffFFB4B4]
+  };
   List<String> problems = [
     'asset://assets/problem/1.png',
     'asset://assets/problem/2.png',
@@ -61,6 +66,16 @@ class AlarmService extends ChangeNotifier {
     "52",
     "4"
   ];
+  void setColor(int hexColor) {
+    color = changeColorCode(hexColor);
+    notifyListeners();
+  }
+
+  void setSubColor(int hexColor) {
+    subColor = changeSubColorCode(hexColor);
+    notifyListeners();
+  }
+
   MaterialColor changeColorCode(int hexColor) {
     color = MaterialColor(hexColor, const <int, Color>{
       50: Color.fromRGBO(238, 129, 48, .1),
