@@ -30,6 +30,7 @@ class AlarmService extends ChangeNotifier {
   List<dynamic> songs = [
     ["Default", "assets/sound/Default.mp3", true],
     ["After Like", "assets/sound/A.mp3", true],
+    ["Beetroot", "assets/sound/B.mp3", true]
   ];
   List<String> problems = [
     'asset://assets/problem/1.png',
@@ -131,12 +132,18 @@ class AlarmService extends ChangeNotifier {
   Future<void> prevAudio(int index) async {
     if (songs[index][2]) {
       if (oldIndexSong != index) {
-        prevAudio(oldIndexSong);
+        if (oldIndexSong != -1) {
+          songs[oldIndexSong][2] = !songs[oldIndexSong][2];
+          stopAudio();
+        }
         oldIndexSong = index;
       }
       startAudio();
       songs[index][2] = !songs[index][2];
     } else {
+      if (oldIndexSong == index) {
+        oldIndexSong = -1;
+      }
       stopAudio();
       songs[index][2] = !songs[index][2];
     }

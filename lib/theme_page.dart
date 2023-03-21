@@ -59,7 +59,7 @@ class _ThemeListState extends State<ThemeList> {
                                 ),
                                 TextButton(
                                     onPressed: () {
-                                      if (alarmService.reward >= 200) {
+                                      if (alarmService.reward >= 100) {
                                         alarmService.getTheme(index);
                                         Navigator.pop(context);
                                       } else {
