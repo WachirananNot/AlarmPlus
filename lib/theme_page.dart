@@ -45,9 +45,58 @@ class _ThemeListState extends State<ThemeList> {
                                   ])
                       ],
                     ),
-                    onTap: () {
-                      //ตอนกดแล้วซื้อทำตรงนี้
-                    },
+                    onTap: () => showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          if (alarmService.theme[index]![3] == false) {
+                            return AlertDialog(
+                              title:
+                                  const Text('Do you want to buy this theme?'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text('Cancel'),
+                                ),
+                                TextButton(
+                                    onPressed: () {
+                                      if (alarmService.reward >= 200) {
+                                        alarmService.getTheme(index);
+                                        Navigator.pop(context);
+                                      } else {
+                                        Navigator.pop(context);
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) => AlertDialog(
+                                                    title: const Text(
+                                                        "You don't enough coin"),
+                                                    actions: <Widget>[
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          Navigator.pop(
+                                                              context);
+                                                        },
+                                                        child:
+                                                            const Text('Close'),
+                                                      )
+                                                    ]));
+                                      }
+                                    },
+                                    child: const Text('OK')),
+                              ],
+                            );
+                          } else {
+                            return AlertDialog(
+                              title: const Text(
+                                  'You have already bought this theme.'),
+                              actions: <Widget>[
+                                TextButton(
+                                  onPressed: () => Navigator.pop(context),
+                                  child: const Text('Close'),
+                                ),
+                              ],
+                            );
+                          }
+                        }),
                   ),
                 );
               })),

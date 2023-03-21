@@ -94,6 +94,12 @@ class AlarmService extends ChangeNotifier {
     return color;
   }
 
+  void getTheme(int index) {
+    theme[index]![3] = true;
+    reward = reward - 100;
+    notifyListeners();
+  }
+
   Future<void> updateReward() async {
     reward += currentReward;
     currentReward = 30;
