@@ -18,12 +18,19 @@ class AlarmService extends ChangeNotifier {
   late int chosen = 1;
   late bool isSelected = false;
   late bool isCorrect = false;
+  late bool isPlaying = false;
+  late String selectedSong = "";
+  late int oldIndexSong = 0;
   Map<int, List<dynamic>> theme = {
     0: ["assets/theme/blue.png", 0xff5DBAFE, 0xffC1E1F9, false],
     1: ["assets/theme/green.png", 0xff35934F, 0xff83DA9B, true],
     2: ["assets/theme/purple.png", 0xff9E9CF3, 0xffCAC9EE, true],
     3: ["assets/theme/red.png", 0xffFF8181, 0xffFFB4B4, true]
   };
+  List<dynamic> songs = [
+    ["Default", "assets/sound/Default.mp3", true],
+    ["After Like", "assets/sound/A.mp3", true],
+  ];
   List<String> problems = [
     'asset://assets/problem/1.png',
     'asset://assets/problem/2.png',
@@ -68,6 +75,11 @@ class AlarmService extends ChangeNotifier {
     "52",
     "4"
   ];
+  void setSelectedSong(int index) {
+    selectedSong = songs[index][1];
+    notifyListeners();
+  }
+
   void setColor(int hexColor) {
     color = changeColorCode(hexColor);
     notifyListeners();
@@ -110,9 +122,26 @@ class AlarmService extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> prevAudio(int index) async {
+    if (songs[index][2]) {
+      if (oldIndexSong != index) {
+        prevAudio(oldIndexSong);
+        oldIndexSong = index;
+      }
+      startAudio();
+      songs[index][2] = !songs[index][2];
+    } else {
+      stopAudio();
+      songs[index][2] = !songs[index][2];
+    }
+
+    notifyListeners();
+  }
+
   Future<void> stopAudio() async {
     int result = await player.stop();
-
+    isPlaying = false;
+    notifyListeners();
     // You can pasue the player
     // int result = await player.pause();
 
@@ -125,11 +154,16 @@ class AlarmService extends ChangeNotifier {
   }
 
   Future<void> startAudio() async {
-    String audioasset = "assets/sound/P.mp3";
+    player.setReleaseMode(ReleaseMode.LOOP);
+    String audioasset = selectedSong;
     ByteData bytes = await rootBundle.load(audioasset); //load sound from assets
     Uint8List soundbytes =
         bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
     int result = await player.playBytes(soundbytes);
+    player.onPlayerStateChanged.listen((state) {
+      isPlaying = state == PlayerState.PLAYING;
+    });
+    notifyListeners();
     if (result == 1) {
       //play success
       print("Sound playing successful.");
