@@ -15,12 +15,14 @@ class AlarmService extends ChangeNotifier {
   late int randomNumber;
   late int reward = 100;
   late int currentReward = 30;
+  late int chosen = 1;
+  late bool isSelected = false;
   late bool isCorrect = false;
   Map<int, List<dynamic>> theme = {
-    0: ["assets/theme/blue.png", 0xff5DBAFE, 0xffC1E1F9],
-    1: ["assets/theme/green.png", 0xff35934F, 0xff83DA9B],
-    2: ["assets/theme/purple.png", 0xff9E9CF3, 0xffCAC9EE],
-    3: ["assets/theme/red.png", 0xffFF8181, 0xffFFB4B4]
+    0: ["assets/theme/blue.png", 0xff5DBAFE, 0xffC1E1F9, false],
+    1: ["assets/theme/green.png", 0xff35934F, 0xff83DA9B, true],
+    2: ["assets/theme/purple.png", 0xff9E9CF3, 0xffCAC9EE, true],
+    3: ["assets/theme/red.png", 0xffFF8181, 0xffFFB4B4, true]
   };
   List<String> problems = [
     'asset://assets/problem/1.png',
