@@ -83,10 +83,10 @@ class NotificationController {
   @pragma("vm:entry-point")
   static Future<void> onActionReceivedMethod(ReceivedAction receivedAction,
       NotificationController notificationController) async {
-    print(receivedAction);
+    //print(receivedAction);
     Map<int, List<dynamic>> alarmItem =
         notificationController.alarmService.alarmItem;
-    print(alarmItem);
+    //print(alarmItem);
     if (receivedAction.buttonKeyInput.length != 0) {
       if (notificationController.alarmService.getResult() ==
           receivedAction.buttonKeyInput) {
