@@ -103,7 +103,7 @@ class _ThemeListState extends State<ThemeList> {
         );
       } else {
         BoxDecoration? myBox() {
-          if (alarmService.isSelected) {
+          if (alarmService.isSelectedTheme) {
             return BoxDecoration(
                 border: Border.all(
                     width: 2,
@@ -135,7 +135,7 @@ class _ThemeListState extends State<ThemeList> {
                 return Container(
                   margin: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                   child: GestureDetector(
-                    child: alarmService.chosen == index + 1
+                    child: alarmService.chosenTheme == index + 1
                         ? Container(
                             decoration: myBox(),
                             child: Image.asset(currentItem.value[0]),
@@ -143,8 +143,8 @@ class _ThemeListState extends State<ThemeList> {
                         : Image.asset(currentItem.value[0]),
                     onTap: () {
                       setState(() {
-                        alarmService.isSelected = true;
-                        alarmService.chosen = index + 1;
+                        alarmService.isSelectedTheme = true;
+                        alarmService.chosenTheme = index + 1;
                         alarmService.setColor(currentItem.value[1]);
                         alarmService.setSubColor(currentItem.value[2]);
                       });

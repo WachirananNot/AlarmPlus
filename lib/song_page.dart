@@ -26,19 +26,91 @@ class _SongListState extends State<SongList> {
                   child: SizedBox(
                     height: 70,
                     child: GestureDetector(
-                        onTap: () async {},
+                        onTap: () {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                if (!alarmService.songs[index][3]) {
+                                  return AlertDialog(
+                                    title: const Text(
+                                        'Do you want to buy this theme?'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                          onPressed: () {
+                                            if (alarmService.reward >= 100) {
+                                              alarmService.getSongs(index);
+                                              Navigator.pop(context);
+                                            } else {
+                                              Navigator.pop(context);
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      AlertDialog(
+                                                          title: const Text(
+                                                              "You don't enough coin"),
+                                                          actions: <Widget>[
+                                                            TextButton(
+                                                              onPressed: () {
+                                                                Navigator.pop(
+                                                                    context);
+                                                              },
+                                                              child: const Text(
+                                                                  'Close'),
+                                                            )
+                                                          ]));
+                                            }
+                                          },
+                                          child: const Text('OK')),
+                                    ],
+                                  );
+                                } else {
+                                  return AlertDialog(
+                                    title: const Text(
+                                        'You have already bought this song.'),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () => Navigator.pop(context),
+                                        child: const Text('Close'),
+                                      ),
+                                    ],
+                                  );
+                                }
+                              });
+                        },
                         child: Card(
                             child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ListTile(
+                                trailing: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: !alarmService.songs[index]![3]
+                                        ? const [
+                                            Icon(
+                                              Icons.attach_money,
+                                              color: Colors.yellow,
+                                            ),
+                                            Text("100",
+                                                style: TextStyle(
+                                                    color: Colors.yellow))
+                                          ]
+                                        : [
+                                            const Text("Owned",
+                                                style: TextStyle(
+                                                    color: Colors.green))
+                                          ]),
                                 leading: IconButton(
                                   icon: Icon(!alarmService.songs[index][2]
                                       ? Icons.pause
                                       : Icons.play_arrow),
                                   onPressed: () async {
-                                    alarmService.setSelectedSong(index);
+                                    alarmService.setPrevSelectedSong(index);
                                     alarmService.prevAudio(index);
+                                    alarmService.restoreSong();
                                   },
                                 ),
                                 title: Text(
@@ -54,6 +126,7 @@ class _SongListState extends State<SongList> {
           ),
         );
       } else {
+        alarmService.setPrevSong();
         return Scaffold(
           backgroundColor: alarmService.subColor,
           appBar: AppBar(
@@ -63,29 +136,46 @@ class _SongListState extends State<SongList> {
           body: Container(
             margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),
             child: ListView.builder(
-              itemCount: alarmService.songs.length,
+              itemCount: alarmService.filteredSongs.length,
               itemBuilder: ((context, index) {
                 return SingleChildScrollView(
                   child: SizedBox(
                     height: 70,
                     child: GestureDetector(
-                        onTap: () async {},
+                        onTap: () {
+                          setState(() {
+                            alarmService.isSelectedSong = true;
+                            alarmService.chosenSong = index + 1;
+                            alarmService.selectPrev(index);
+                          });
+                        },
                         child: Card(
                             child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ListTile(
+                                trailing: alarmService.chosenSong == index + 1
+                                    ? const Icon(
+                                        Icons.check_box,
+                                        color: Colors.green,
+                                      )
+                                    : const Icon(
+                                        Icons.check_box_outline_blank_outlined,
+                                        color: Colors.black,
+                                      ),
                                 leading: IconButton(
-                                  icon: Icon(!alarmService.songs[index][2]
+                                  icon: Icon(!alarmService.filteredSongs[index]
+                                          [2]
                                       ? Icons.pause
                                       : Icons.play_arrow),
                                   onPressed: () async {
-                                    alarmService.setSelectedSong(index);
-                                    alarmService.prevAudio(index);
+                                    alarmService.selectPrev(index);
+                                    alarmService.prevSettingAudio(index);
+                                    alarmService.restoreSong();
                                   },
                                 ),
                                 title: Text(
-                                  alarmService.songs[index][0],
+                                  alarmService.filteredSongs[index][0],
                                   style: Theme.of(context).textTheme.headline6,
                                 )),
                           ],
