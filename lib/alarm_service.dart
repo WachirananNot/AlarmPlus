@@ -15,12 +15,17 @@ class AlarmService extends ChangeNotifier {
   late int randomNumber;
   late int reward = 100;
   late int currentReward = 30;
-  late int chosen = 1;
-  late bool isSelected = false;
+  late int chosenTheme = 1;
+  late int chosenSong = 1;
+  late bool isSelectedTheme = false;
+  late bool isSelectedSong = false;
   late bool isCorrect = false;
   late bool isPlaying = false;
   late String selectedSong = "";
+  late String oldSong = "";
+  late String prevSong = "";
   late int oldIndexSong = 0;
+  late List<dynamic> filteredSongs;
   Map<int, List<dynamic>> theme = {
     0: ["assets/theme/blue.png", 0xff5DBAFE, 0xffC1E1F9, false],
     1: ["assets/theme/green.png", 0xff35934F, 0xff83DA9B, true],
@@ -28,10 +33,11 @@ class AlarmService extends ChangeNotifier {
     3: ["assets/theme/red.png", 0xffFF8181, 0xffFFB4B4, true]
   };
   List<dynamic> songs = [
-    ["Default", "assets/sound/Default.mp3", true],
-    ["After Like", "assets/sound/A.mp3", true],
-    ["Beetroot", "assets/sound/B.mp3", true]
+    ["Default", "assets/sound/Default.mp3", true, true],
+    ["After Like", "assets/sound/A.mp3", true, false],
+    ["Beetroot", "assets/sound/B.mp3", true, false]
   ];
+
   List<String> problems = [
     'asset://assets/problem/1.png',
     'asset://assets/problem/2.png',
@@ -76,7 +82,21 @@ class AlarmService extends ChangeNotifier {
     "52",
     "4"
   ];
-  void setSelectedSong(int index) {
+  void setPrevSong() {
+    filteredSongs = songs.where((song) => song.last == true).toList();
+  }
+
+  void selectPrev(int index) {
+    oldSong = selectedSong;
+    selectedSong = filteredSongs[index][1];
+  }
+
+  void restoreSong() {
+    selectedSong = oldSong;
+  }
+
+  void setPrevSelectedSong(int index) {
+    oldSong = selectedSong;
     selectedSong = songs[index][1];
     notifyListeners();
   }
@@ -113,6 +133,12 @@ class AlarmService extends ChangeNotifier {
     notifyListeners();
   }
 
+  void getSongs(int index) {
+    songs[index][3] = true;
+    reward = reward - 100;
+    notifyListeners();
+  }
+
   Future<void> updateReward() async {
     reward += currentReward;
     currentReward = 30;
@@ -126,6 +152,28 @@ class AlarmService extends ChangeNotifier {
     } else {
       currentReward = 0;
     }
+    notifyListeners();
+  }
+
+  Future<void> prevSettingAudio(int index) async {
+    if (filteredSongs[index][2]) {
+      if (oldIndexSong != index) {
+        if (oldIndexSong != -1) {
+          filteredSongs[oldIndexSong][2] = !filteredSongs[oldIndexSong][2];
+          stopAudio();
+        }
+        oldIndexSong = index;
+      }
+      startAudio();
+      filteredSongs[index][2] = !filteredSongs[index][2];
+    } else {
+      if (oldIndexSong == index) {
+        oldIndexSong = -1;
+      }
+      stopAudio();
+      filteredSongs[index][2] = !filteredSongs[index][2];
+    }
+
     notifyListeners();
   }
 
