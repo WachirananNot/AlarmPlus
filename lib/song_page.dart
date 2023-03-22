@@ -33,7 +33,7 @@ class _SongListState extends State<SongList> {
                                 if (!alarmService.songs[index][3]) {
                                   return AlertDialog(
                                     title: const Text(
-                                        'Do you want to buy this theme?'),
+                                        'Do you want to buy this song?'),
                                     actions: <Widget>[
                                       TextButton(
                                         onPressed: () => Navigator.pop(context),
@@ -51,7 +51,7 @@ class _SongListState extends State<SongList> {
                                                   builder: (context) =>
                                                       AlertDialog(
                                                           title: const Text(
-                                                              "You don't enough coin"),
+                                                              "You don't have enough coin"),
                                                           actions: <Widget>[
                                                             TextButton(
                                                               onPressed: () {
