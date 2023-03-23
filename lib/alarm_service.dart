@@ -134,6 +134,12 @@ class AlarmService extends ChangeNotifier {
       }
     }
 
+    final getIndexSong = prefs.getInt("songIndex");
+    chosenSong = getIndexSong ?? 0;
+
+    final getLinkSong = prefs.getString("songLink");
+    selectedSong = getLinkSong ?? "assets/sound/Default.mp3";
+
     // final getColorCode = prefs.getInt("colorCode");
     // if (getColorCode != null) {
     //   color = changeColorCode(getColorCode);
@@ -157,7 +163,11 @@ class AlarmService extends ChangeNotifier {
     await prefs.setInt("subColorCode", subColorCode);
   }
 
-  
+  Future<void> saveSelectSong() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("songIndex", chosenSong);
+    await prefs.setString("songLink", selectedSong);
+  }
 
   Future<void> saveTheme() async {
     final prefs = await SharedPreferences.getInstance();

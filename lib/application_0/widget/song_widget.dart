@@ -150,6 +150,7 @@ class _SongListState extends State<SongList> {
                             alarmService.chosenSong =
                                 alarmService.filteredSongs[index][4];
                             alarmService.selectPrev(index);
+                            alarmService.saveSelectSong();
                             print(alarmService.selectedSong);
                           });
                         },
