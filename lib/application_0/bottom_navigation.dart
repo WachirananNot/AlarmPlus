@@ -1,7 +1,7 @@
-import 'package:alarmplus/alarm_page.dart';
+import 'package:alarmplus/application_0/page/alarm/alarm_page.dart';
 import 'package:alarmplus/alarm_service.dart';
-import 'package:alarmplus/setting_page.dart';
-import 'package:alarmplus/shop_page.dart';
+import 'package:alarmplus/application_0/page/setting/setting_page.dart';
+import 'package:alarmplus/application_0/page/shop/shop_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

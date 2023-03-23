@@ -1,7 +1,7 @@
 import 'package:alarmplus/alarm_service.dart';
-import 'package:alarmplus/shop_page.dart';
-import 'package:alarmplus/song_page.dart';
-import 'package:alarmplus/theme_page.dart';
+import 'package:alarmplus/application_0/page/shop/shop_page.dart';
+import 'package:alarmplus/application_0/widget/song_widget.dart';
+import 'package:alarmplus/application_0/widget/theme_widget.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';

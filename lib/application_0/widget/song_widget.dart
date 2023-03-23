@@ -147,8 +147,10 @@ class _SongListState extends State<SongList> {
                         onTap: () {
                           setState(() {
                             alarmService.isSelectedSong = true;
-                            alarmService.chosenSong = index + 1;
+                            alarmService.chosenSong =
+                                alarmService.filteredSongs[index][4];
                             alarmService.selectPrev(index);
+                            print(alarmService.selectedSong);
                           });
                         },
                         child: Card(
@@ -156,7 +158,8 @@ class _SongListState extends State<SongList> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             ListTile(
-                                trailing: alarmService.chosenSong == index + 1
+                                trailing: alarmService.chosenSong ==
+                                        alarmService.filteredSongs[index][4]
                                     ? const Icon(
                                         Icons.check_box,
                                         color: Colors.green,
@@ -170,10 +173,11 @@ class _SongListState extends State<SongList> {
                                           [2]
                                       ? Icons.pause
                                       : Icons.play_arrow),
-                                  onPressed: () async {
+                                  onPressed: () {
                                     alarmService.selectPrev(index);
                                     alarmService.prevSettingAudio(index);
                                     alarmService.restoreSong();
+                                    print(alarmService.selectedSong);
                                   },
                                 ),
                                 title: Text(

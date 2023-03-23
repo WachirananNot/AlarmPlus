@@ -1,7 +1,7 @@
 // ignore_for_file: unnecessary_brace_in_string_interps
 
 import 'package:alarmplus/alarm_service.dart';
-import 'package:alarmplus/time_picker.dart';
+import 'package:alarmplus/application_0/widget/time_picker.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

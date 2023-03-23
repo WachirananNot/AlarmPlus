@@ -1,5 +1,5 @@
 import 'package:alarmplus/alarm_service.dart';
-import 'package:alarmplus/bottom_navigation.dart';
+import 'package:alarmplus/application_0/bottom_navigation.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

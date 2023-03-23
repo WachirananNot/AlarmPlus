@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'alarm_service.dart';
+import '../../alarm_service.dart';
 
 class ThemeList extends StatefulWidget {
   const ThemeList({super.key, required this.page});
@@ -151,6 +151,8 @@ class _ThemeListState extends State<ThemeList> {
                         alarmService.setColor(currentItem.value[1]);
                         alarmService.setSubColor(currentItem.value[2]);
                       });
+                      alarmService.saveChooseTheme(
+                          currentItem.value[1], currentItem.value[2]);
                     },
                   ),
                 );

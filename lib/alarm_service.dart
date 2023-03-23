@@ -18,7 +18,7 @@ class AlarmService extends ChangeNotifier {
   late int reward = 100;
   late int currentReward = 30;
   late int chosenTheme = 1;
-  late int chosenSong = 1;
+  late int chosenSong = 0;
   late bool isSelectedTheme = false;
   late bool isSelectedSong = false;
   late bool isCorrect = false;
@@ -35,21 +35,22 @@ class AlarmService extends ChangeNotifier {
     3: ["assets/theme/red.png", 0xffFF8181, 0xffFFB4B4, false]
   };
   List<dynamic> songs = [
-    ["Default", "assets/sound/Default.mp3", true, true],
-    ["After Like", "assets/sound/A.mp3", true, false],
-    ["Big Enough", "assets/sound/B.mp3", true, false],
-    ["Bang-Ra-Jan", "assets/sound/Bang-Ra-Jan.mp3", true, false],
-    ["Cupid", "assets/sound/C.mp3", true, false],
-    ["JoJo", "assets/sound/JoJo.mp3", true, false],
+    ["Default", "assets/sound/Default.mp3", true, true, 0],
+    ["After Like", "assets/sound/A.mp3", true, false, 1],
+    ["Big Enough", "assets/sound/B.mp3", true, false, 2],
+    ["Bang-Ra-Jan", "assets/sound/Bang-Ra-Jan.mp3", true, false, 3],
+    ["Cupid", "assets/sound/C.mp3", true, false, 4],
+    ["JoJo", "assets/sound/JoJo.mp3", true, false, 5],
     [
       "Never Gonna Give You Up",
       "assets/sound/Never Gonna Give You Up.mp3",
       true,
-      false
+      false,
+      6
     ],
-    ["OMG", "assets/sound/O.mp3", true, false],
-    ["U R MINE", "assets/sound/P.mp3", true, false],
-    ["Samsung", "assets/sound/Samsung.mp3", true, false],
+    ["OMG", "assets/sound/O.mp3", true, false, 7],
+    ["U R MINE", "assets/sound/P.mp3", true, false, 8],
+    ["Samsung", "assets/sound/Samsung.mp3", true, false, 9],
   ];
 
   List<String> problems = [
@@ -100,7 +101,7 @@ class AlarmService extends ChangeNotifier {
   Future<void> getData() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final getChoseSong = prefs.getInt("ChoseSong");
+    // final getChoseSong = prefs.getInt("ChoseSong");
     // chosenSong = getChoseSong ?? 1;
 
     final getMoney = prefs.getInt("money");
@@ -123,15 +124,25 @@ class AlarmService extends ChangeNotifier {
     final getSongDetail = prefs.getStringList("songs");
     if (getSongDetail != null) {
       int i = 0;
-      getSongDetail.forEach((element) {
+      for (var element in getSongDetail) {
         if (element == 'true') {
           songs[i]![3] = true;
         } else {
           songs[i]![3] = false;
         }
         i += 1;
-      });
+      }
     }
+
+    // final getColorCode = prefs.getInt("colorCode");
+    // if (getColorCode != null) {
+    //   color = changeColorCode(getColorCode);
+    // }
+
+    // final getSubColorCode = prefs.getInt("subColorCode");
+    // if (getSubColorCode != null) {
+    //   subColor = changeColorCode(getSubColorCode);
+    // }
   }
 
   Future<void> saveRewardData() async {
@@ -139,6 +150,14 @@ class AlarmService extends ChangeNotifier {
 
     await prefs.setInt("money", reward);
   }
+
+  Future<void> saveChooseTheme(int colorCode, int subColorCode) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt("colorCode", colorCode);
+    await prefs.setInt("subColorCode", subColorCode);
+  }
+
+  
 
   Future<void> saveTheme() async {
     final prefs = await SharedPreferences.getInstance();
@@ -167,12 +186,20 @@ class AlarmService extends ChangeNotifier {
         }
       },
     );
-    // data = ['false', 'false', 'true', 'false'];
+    // data = [
+    //   'true',
+    //   'false',
+    //   'false',
+    //   'false',
+    //   'false',
+    //   'false',
+    //   'false',
+    // ];
     prefs.setStringList('songs', data);
   }
 
   void setPrevSong() {
-    filteredSongs = songs.where((song) => song.last == true).toList();
+    filteredSongs = songs.where((song) => song[3] == true).toList();
   }
 
   void selectPrev(int index) {

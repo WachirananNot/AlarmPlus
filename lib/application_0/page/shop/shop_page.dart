@@ -1,6 +1,6 @@
 import 'package:alarmplus/alarm_service.dart';
-import 'package:alarmplus/song_page.dart';
-import 'package:alarmplus/theme_page.dart';
+import 'package:alarmplus/application_0/widget/song_widget.dart';
+import 'package:alarmplus/application_0/widget/theme_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
