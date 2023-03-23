@@ -61,6 +61,8 @@ class _ThemeListState extends State<ThemeList> {
                                     onPressed: () {
                                       if (alarmService.reward >= 100) {
                                         alarmService.getTheme(index);
+                                        alarmService.saveTheme();
+                                        alarmService.saveRewardData();
                                         Navigator.pop(context);
                                       } else {
                                         Navigator.pop(context);
@@ -85,6 +87,7 @@ class _ThemeListState extends State<ThemeList> {
                               ],
                             );
                           } else {
+                            alarmService.saveTheme();
                             return AlertDialog(
                               title: const Text(
                                   'You have already bought this theme.'),

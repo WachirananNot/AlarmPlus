@@ -44,6 +44,7 @@ class _SettingPageState extends State<SettingPage> {
                       height: 100,
                       child: GestureDetector(
                           onTap: () {
+          
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

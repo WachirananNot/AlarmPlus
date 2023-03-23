@@ -101,21 +101,74 @@ class AlarmService extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
 
     final getChoseSong = prefs.getInt("ChoseSong");
-    chosenSong = getChoseSong ?? 1;
+    // chosenSong = getChoseSong ?? 1;
 
     final getMoney = prefs.getInt("money");
     reward = getMoney ?? 100;
-    // reward = 100;
+    // reward = 10000;
 
-    // final getThemeDetail = prefs.getStringList("themes");
+    final getThemeDetail = prefs.getStringList("themes");
+    if (getThemeDetail != null) {
+      int i = 0;
+      getThemeDetail.forEach((element) {
+        if (element == 'true') {
+          theme[i]![3] = true;
+        } else {
+          theme[i]![3] = false;
+        }
+        i += 1;
+      });
+    }
 
-    // final getSongDetail = prefs.getStringList("songs");
+    final getSongDetail = prefs.getStringList("songs");
+    if (getSongDetail != null) {
+      int i = 0;
+      getSongDetail.forEach((element) {
+        if (element == 'true') {
+          songs[i]![3] = true;
+        } else {
+          songs[i]![3] = false;
+        }
+        i += 1;
+      });
+    }
   }
 
   Future<void> saveRewardData() async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt("money", reward);
+  }
+
+  Future<void> saveTheme() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> data = [];
+
+    theme.forEach((key, value) {
+      if (theme[key]![3] == true) {
+        data.add('true');
+      } else {
+        data.add('false');
+      }
+    });
+    // data = ['false', 'false', 'true', 'false'];
+    prefs.setStringList('themes', data);
+  }
+
+  Future<void> saveSong() async {
+    final prefs = await SharedPreferences.getInstance();
+    List<String> data = [];
+    songs.forEach(
+      (element) {
+        if (element[3] == true) {
+          data.add('true');
+        } else {
+          data.add('false');
+        }
+      },
+    );
+    // data = ['false', 'false', 'true', 'false'];
+    prefs.setStringList('songs', data);
   }
 
   void setPrevSong() {
@@ -196,19 +249,19 @@ class AlarmService extends ChangeNotifier {
     if (filteredSongs[index][2]) {
       if (oldIndexSong != index) {
         if (oldIndexSong != -1) {
-          filteredSongs[oldIndexSong][2] = !filteredSongs[oldIndexSong][2];
+          filteredSongs[oldIndexSong][2] = true;
           stopAudio();
         }
         oldIndexSong = index;
       }
       startAudio();
-      filteredSongs[index][2] = !filteredSongs[index][2];
+      filteredSongs[index][2] = false;
     } else {
       if (oldIndexSong == index) {
         oldIndexSong = -1;
       }
       stopAudio();
-      filteredSongs[index][2] = !filteredSongs[index][2];
+      filteredSongs[index][2] = true;
     }
 
     notifyListeners();
