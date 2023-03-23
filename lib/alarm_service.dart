@@ -4,6 +4,8 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AlarmService extends ChangeNotifier {
   late AudioPlayer player = AudioPlayer();
@@ -28,9 +30,9 @@ class AlarmService extends ChangeNotifier {
   late List<dynamic> filteredSongs;
   Map<int, List<dynamic>> theme = {
     0: ["assets/theme/blue.png", 0xff5DBAFE, 0xffC1E1F9, false],
-    1: ["assets/theme/green.png", 0xff35934F, 0xff83DA9B, true],
+    1: ["assets/theme/green.png", 0xff35934F, 0xff83DA9B, false],
     2: ["assets/theme/purple.png", 0xff9E9CF3, 0xffCAC9EE, true],
-    3: ["assets/theme/red.png", 0xffFF8181, 0xffFFB4B4, true]
+    3: ["assets/theme/red.png", 0xffFF8181, 0xffFFB4B4, false]
   };
   List<dynamic> songs = [
     ["Default", "assets/sound/Default.mp3", true, true],
@@ -94,6 +96,28 @@ class AlarmService extends ChangeNotifier {
     "52",
     "4"
   ];
+
+  Future<void> getData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    final getChoseSong = prefs.getInt("ChoseSong");
+    chosenSong = getChoseSong ?? 1;
+
+    final getMoney = prefs.getInt("money");
+    reward = getMoney ?? 100;
+    // reward = 100;
+
+    // final getThemeDetail = prefs.getStringList("themes");
+
+    // final getSongDetail = prefs.getStringList("songs");
+  }
+
+  Future<void> saveRewardData() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setInt("money", reward);
+  }
+
   void setPrevSong() {
     filteredSongs = songs.where((song) => song.last == true).toList();
   }
@@ -139,9 +163,10 @@ class AlarmService extends ChangeNotifier {
     return color;
   }
 
-  void getTheme(int index) {
+  void getTheme(int index) async {
     theme[index]![3] = true;
     reward = reward - 100;
+    await saveRewardData();
     notifyListeners();
   }
 
@@ -371,6 +396,7 @@ class AlarmService extends ChangeNotifier {
     alarmItem.removeWhere((key, value) => value.contains(time));
     index -= 1;
     sortListAlarm();
+    notifyListeners();
   }
 
   MaterialColor changeSubColorCode(int hexColor) {

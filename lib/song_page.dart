@@ -43,6 +43,7 @@ class _SongListState extends State<SongList> {
                                           onPressed: () {
                                             if (alarmService.reward >= 100) {
                                               alarmService.getSongs(index);
+                                              alarmService.saveRewardData();
                                               Navigator.pop(context);
                                             } else {
                                               Navigator.pop(context);

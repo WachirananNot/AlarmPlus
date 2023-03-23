@@ -85,17 +85,18 @@ class NotificationController {
     Map<int, List<dynamic>> alarmItem =
         notificationController.alarmService.alarmItem;
     //print(alarmItem);
-    if (receivedAction.buttonKeyInput.length != 0) {
+    if (receivedAction.buttonKeyInput.isNotEmpty) {
       if (notificationController.alarmService.getResult() ==
           receivedAction.buttonKeyInput) {
         AwesomeNotifications().dismissAllNotifications();
-        print("Equal");
+        // print("Equal");
         await notificationController.alarmService.stopAudio();
         await notificationController.alarmService.updateReward();
-        print(notificationController.alarmService.reward);
+        await notificationController.alarmService.saveRewardData();
+        // print(notificationController.alarmService.reward);
       } else {
         notificationController.alarmService.decreaseReward();
-        print(notificationController.alarmService.currentReward);
+        // print(notificationController.alarmService.currentReward);
       }
     }
     if (notificationController.alarmService.isCorrect) {
