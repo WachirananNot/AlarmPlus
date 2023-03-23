@@ -21,7 +21,7 @@ class AlarmService extends ChangeNotifier {
   late bool isSelectedSong = false;
   late bool isCorrect = false;
   late bool isPlaying = false;
-  late String selectedSong = "";
+  late String selectedSong = "assets/sound/Default.mp3";
   late String oldSong = "";
   late String prevSong = "";
   late int oldIndexSong = 0;
@@ -35,7 +35,19 @@ class AlarmService extends ChangeNotifier {
   List<dynamic> songs = [
     ["Default", "assets/sound/Default.mp3", true, true],
     ["After Like", "assets/sound/A.mp3", true, false],
-    ["Beetroot", "assets/sound/B.mp3", true, false]
+    ["Big Enough", "assets/sound/B.mp3", true, false],
+    ["Bang-Ra-Jan", "assets/sound/Bang-Ra-Jan.mp3", true, false],
+    ["Cupid", "assets/sound/C.mp3", true, false],
+    ["JoJo", "assets/sound/JoJo.mp3", true, false],
+    [
+      "Never Gonna Give You Up",
+      "assets/sound/Never Gonna Give You Up.mp3",
+      true,
+      false
+    ],
+    ["OMG", "assets/sound/O.mp3", true, false],
+    ["U R MINE", "assets/sound/P.mp3", true, false],
+    ["Samsung", "assets/sound/Samsung.mp3", true, false],
   ];
 
   List<String> problems = [
