@@ -2,6 +2,12 @@ import 'package:alarmplus/alarm_service.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// -----------------------------------------------------------------------------
+// SongList
+// -----------------------------------------------------------------------------
+// The SongList class is a stateful widget
+// It has a page parameter that indicates the current page of the song list.
+
 class SongList extends StatefulWidget {
   const SongList({super.key, this.page});
   final String? page;
@@ -9,6 +15,18 @@ class SongList extends StatefulWidget {
   @override
   State<SongList> createState() => _SongListState();
 }
+
+// -----------------------------------------------------------------------------
+// _SongListState
+// -----------------------------------------------------------------------------
+//
+// _SongListState is a stateful widget that defines the UI and functionality for displaying a list of songs.
+// It renders different views depending on the page parameter.
+// If page is "shop", it displays a list of songs available for purchase.
+// After that, if user want to buy that song.
+// It have to check the reward are enough or not,
+// if enough, it will show a dialog to buy the song.
+// If there are not enough reward, a dialog will appear that there are not enough reward.
 
 class _SongListState extends State<SongList> {
   @override
