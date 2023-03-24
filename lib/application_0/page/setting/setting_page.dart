@@ -1,9 +1,27 @@
+// -----------------------------------------------------------------------------
+// Wachiranan Phuangpanya 630510642 (Feature should have: Change theme and Change song)
+// -----------------------------------------------------------------------------
+// setting_page.dart
+// -----------------------------------------------------------------------------
+// This is a Flutter widget that represents a settings page in an alarm application. 
+// The page includes a list of settings options, such as changing the alarm tone or theme. 
+// The widget imports the necessary packages and uses the Provider package to consume data from the AlarmService.
+
 import 'package:alarmplus/alarm_service.dart';
 import 'package:alarmplus/application_0/page/setting/widget/setting_song_widget.dart';
 import 'package:alarmplus/application_0/page/setting/widget/setting_theme_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+// -----------------------------------------------------------------------------
+// SettingPage
+// -----------------------------------------------------------------------------
+//
+// This class represents a setting page widget that allows users to navigate 
+// between different settings options such as changing songs or changing themes.
+// It extends the StatefulWidget class and defines a State object that manages the widget's state.
+// The class includes a list of menu options and corresponding pages that are displayed when each option is selected.
+// The class also uses the Consumer widget to listen for changes in the AlarmService state and update the widget accordingly.
 class SettingPage extends StatefulWidget {
   const SettingPage({super.key});
 
@@ -59,43 +77,3 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 }
-// Container(
-//                 margin: EdgeInsets.only(top: 50),
-//                 child: Wrap(
-//                   spacing: 10,
-//                   children: [
-//                     ElevatedButton.icon(
-//                         onPressed: () async {
-//                           String audioasset = "assets/sound/P.mp3";
-//                           ByteData bytes = await rootBundle
-//                               .load(audioasset); //load sound from assets
-//                           Uint8List soundbytes = bytes.buffer.asUint8List(
-//                               bytes.offsetInBytes, bytes.lengthInBytes);
-//                           int result = await player.playBytes(soundbytes);
-//                           if (result == 1) {
-//                             //play success
-//                             print("Sound playing successful.");
-//                           } else {
-//                             print("Error while playing sound.");
-//                           }
-//                         },
-//                         icon: Icon(Icons.play_arrow),
-//                         label: Text("Play")),
-//                     ElevatedButton.icon(
-//                         onPressed: () async {
-//                           int result = await player.stop();
-
-//                           // You can pasue the player
-//                           // int result = await player.pause();
-
-//                           if (result == 1) {
-//                             //stop success
-//                             print("Sound playing stopped successfully.");
-//                           } else {
-//                             print("Error on while stopping sound.");
-//                           }
-//                         },
-//                         icon: Icon(Icons.stop),
-//                         label: Text("Stop")),
-//                   ],
-//                 ))
