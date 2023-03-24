@@ -1,6 +1,7 @@
 import 'package:alarmplus/alarm_service.dart';
-import 'package:alarmplus/application_0/widget/song_widget.dart';
-import 'package:alarmplus/application_0/widget/theme_widget.dart';
+import 'package:alarmplus/application_0/page/shop/widget/shop_song_widget.dart';
+import 'package:alarmplus/application_0/page/shop/widget/theme_song_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -53,15 +54,11 @@ class _ShopPageState extends State<ShopPage> {
                             top: BorderSide(color: Colors.grey, width: 0.5))),
                     child: TabBarView(children: <Widget>[
                       Container(
-                        child: ThemeList(
-                          page: "shop",
-                        ),
+                        child: const ThemeShop(),
                       ),
                       Container(
-                        child: Center(
-                            child: SongList(
-                          page: "shop",
-                        )),
+                        child: const Center(
+                            child: ShopSong()),
                       ),
                     ]),
                   )
