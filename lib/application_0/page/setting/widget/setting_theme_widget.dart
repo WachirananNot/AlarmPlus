@@ -20,6 +20,12 @@ import '../../../../alarm_service.dart';
 // It displays a grid of available themes and allows the user to select and apply one of them.
 // The class listens to changes in the AlarmService for the selected theme and updates the UI accordingly.
 // The class uses the Consumer widget to access the AlarmService and rebuilds the UI whenever there are changes.
+// -----------------------------------------------------------------------------
+// SettingTheme (New Feature) :
+// The reason for our desire to add more features to the app is to provide users with greater functionality. 
+// Specifically, we wish to enable users to utilize their coins to make in-app purchases, beyond just acquiring alarm sounds. 
+// As part of this effort, we plan to incorporate a feature that will allow users to modify the app's color scheme by changing the theme.
+
 class SettingTheme extends StatefulWidget {
   const SettingTheme({super.key});
 
