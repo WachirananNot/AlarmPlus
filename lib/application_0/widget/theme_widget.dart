@@ -121,8 +121,8 @@ class _ThemeListState extends State<ThemeList> {
         return Scaffold(
           backgroundColor: alarmService.subColor,
           appBar: AppBar(
-            title: const Center(
-                child: Text("Themes", style: TextStyle(color: Colors.white))),
+            title: Text("Themes", style: TextStyle(color: Colors.white)),
+            centerTitle: true,
           ),
           body: GridView.builder(
               itemCount: alarmService.theme.entries
@@ -146,13 +146,13 @@ class _ThemeListState extends State<ThemeList> {
                         : Image.asset(currentItem.value[0]),
                     onTap: () {
                       setState(() {
+                        alarmService.saveChooseTheme(
+                            currentItem.value[1], currentItem.value[2]);
                         alarmService.isSelectedTheme = true;
                         alarmService.chosenTheme = index + 1;
                         alarmService.setColor(currentItem.value[1]);
                         alarmService.setSubColor(currentItem.value[2]);
                       });
-                      alarmService.saveChooseTheme(
-                          currentItem.value[1], currentItem.value[2]);
                     },
                   ),
                 );

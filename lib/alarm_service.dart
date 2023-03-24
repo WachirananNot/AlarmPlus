@@ -98,6 +98,10 @@ class AlarmService extends ChangeNotifier {
     "4"
   ];
 
+  AlarmService() {
+    getData();
+  }
+
   Future<void> getData() async {
     final prefs = await SharedPreferences.getInstance();
 
@@ -140,15 +144,16 @@ class AlarmService extends ChangeNotifier {
     final getLinkSong = prefs.getString("songLink");
     selectedSong = getLinkSong ?? "assets/sound/Default.mp3";
 
-    // final getColorCode = prefs.getInt("colorCode");
-    // if (getColorCode != null) {
-    //   color = changeColorCode(getColorCode);
-    // }
+    final getColorCode = prefs.getInt("colorCode");
+    if (getColorCode != null) {
+      color = changeColorCode(getColorCode);
+    }
 
-    // final getSubColorCode = prefs.getInt("subColorCode");
-    // if (getSubColorCode != null) {
-    //   subColor = changeColorCode(getSubColorCode);
-    // }
+    final getSubColorCode = prefs.getInt("subColorCode");
+    if (getSubColorCode != null) {
+      subColor = changeColorCode(getSubColorCode);
+    }
+    notifyListeners();
   }
 
   Future<void> saveRewardData() async {
