@@ -3,12 +3,32 @@ import 'package:provider/provider.dart';
 
 import '../../alarm_service.dart';
 
+// -----------------------------------------------------------------------------
+// ThemeList
+// -----------------------------------------------------------------------------
+// The SongList class is a stateful widget.
+// It represents a list of themes.
+// The State object for this class is _ThemeListState.
+
 class ThemeList extends StatefulWidget {
   const ThemeList({super.key, required this.page});
   final String? page;
   @override
   State<ThemeList> createState() => _ThemeListState();
 }
+
+// -----------------------------------------------------------------------------
+// _ThemeListState
+// -----------------------------------------------------------------------------
+//
+// _ThemeListState is a stateful widget that defines the UI and functionality for displaying a list of songs.
+// It renders different views depending on the page parameter.
+// If page is "shop", it displays a list of theme available for purchase,
+// otherwise it builds a grid of owned themes that the user can select as their current theme.
+// After that, if user want to buy that theme.
+// It have to check the reward are enough or not,
+// if enough, it will show a dialog to buy the theme.
+// If there are not enough reward, a dialog will appear that there are not enough reward.
 
 class _ThemeListState extends State<ThemeList> {
   @override
