@@ -1,10 +1,7 @@
 import 'package:alarmplus/alarm_service.dart';
-import 'package:alarmplus/application_0/page/shop/shop_page.dart';
-import 'package:alarmplus/application_0/widget/song_widget.dart';
-import 'package:alarmplus/application_0/widget/theme_widget.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:alarmplus/application_0/page/setting/widget/setting_song_widget.dart';
+import 'package:alarmplus/application_0/page/setting/widget/setting_theme_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class SettingPage extends StatefulWidget {
@@ -17,12 +14,8 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   List<String> menu = ["Change Song", "Change Theme"];
   List<Widget> pages = [
-    const SongList(
-      page: "",
-    ),
-    const ThemeList(
-      page: "",
-    )
+    const SettingSong(),
+    const SettingTheme()
   ];
   @override
   Widget build(BuildContext context) {
