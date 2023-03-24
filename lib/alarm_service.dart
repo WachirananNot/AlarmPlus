@@ -326,6 +326,11 @@ class AlarmService extends ChangeNotifier {
     return color;
   }
 
+  // getTheme() -> Natchareeya Panya
+  // sets the fourth element of the list of the selected theme at the given index to true,
+  // indicating that the theme has been purchased.
+  // deducts 100 coins from the user's rewards by updating the "reward" variable.
+  // call saveRewardData to saves the updated reward data.
   void getTheme(int index) async {
     theme[index]![3] = true;
     reward = reward - 100;
@@ -333,12 +338,20 @@ class AlarmService extends ChangeNotifier {
     notifyListeners();
   }
 
+  // getSongs() -> Natchareeya Panya
+  // sets the fourth element of the list of the selected song at the given index to true,
+  // indicating that the theme has been purchased.
+  // deducts 100 coins from the user's rewards by updating the "reward" variable.
   void getSongs(int index) {
     songs[index][3] = true;
     reward = reward - 100;
     notifyListeners();
   }
 
+  // updateReward() -> Natchareeya Panya
+  // adds the "currentReward" value to the "reward" variable.
+  // notifies the listeners that the data has been updated
+  // by calling the "notifyListeners" function.
   Future<void> updateReward() async {
     reward += currentReward;
     currentReward = 30;
@@ -346,6 +359,10 @@ class AlarmService extends ChangeNotifier {
     notifyListeners();
   }
 
+  // decreaseReward() -> Natchareeya Panya
+  // to checks if the "currentReward" value minus 10 is greater than or equal to 0.
+  // If it is, the function subtracts 10 from the "currentReward" value.
+  // by calling the "notifyListeners" function.
   void decreaseReward() {
     if (currentReward - 10 >= 0) {
       currentReward = currentReward - 10;

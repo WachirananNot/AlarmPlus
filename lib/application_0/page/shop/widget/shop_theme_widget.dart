@@ -1,7 +1,29 @@
+// -----------------------------------------------------------------------------
+// Natchareeya Panya 630510616 (Feature should have: Reward managment, Could have: Shop)
+// -----------------------------------------------------------------------------
+// shop_theme_widget.dart
+// -----------------------------------------------------------------------------
+//
+// This file contains the implementation of the ThemeShop widget
+// which allows users to purchase themes with coins.
+// The widget shows a grid of themes, each with an image and a caption showing.
+// whether it is owned or available for purchase for 100 coins.
+// If a theme is not owned, the user can tap on it to bring up a dialog asking.
+// If the user has enough coins, the theme is purchased and saved,
+// and the user's coin balance is updated.
+// If the user does not have enough coins,
+// a dialog appears informing the user that they do not have enough coins to purchase the theme.
+// The widget is built using the Provider package to manage state
+// and access data from the AlarmService class.
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../alarm_service.dart';
 
+// -----------------------------------------------------------------------------
+// ThemeShop
+// -----------------------------------------------------------------------------
+// The ThemeShop class is a stateful widget
+// can be used to display a list of theme available for purchase within an app.
 class ThemeShop extends StatefulWidget {
   const ThemeShop({super.key});
 
@@ -9,6 +31,14 @@ class ThemeShop extends StatefulWidget {
   State<ThemeShop> createState() => _ThemeShopState();
 }
 
+// -----------------------------------------------------------------------------
+// _ThemeShopState
+// -----------------------------------------------------------------------------
+// A stateful widget class that renders a list of theme.
+// The user can tap on a theme and purchase it if they have enough coins.
+// If a theme is already purchased, it is displayed as "Owned" and cannot be purchased again.
+// If a theme is not purchased, the user is prompted to buy it with a dialog.
+// This class manages the theme shop UI and handles the purchase and ownership logic for each theme.
 class _ThemeShopState extends State<ThemeShop> {
   @override
   Widget build(BuildContext context) {
