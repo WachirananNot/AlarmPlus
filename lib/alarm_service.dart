@@ -9,7 +9,10 @@
 // that manages the app's alarms. this file contains many variables and manage
 // many things like notifications, items, and local storage.
 // -----------------------------------------------------------------------------
-// Cache Management (New feature):
+// Cache Management (New feature): We need to save the user's data especially
+// the shop purchases and user ui state and we want the app to be able to use
+// without internet. Therefore, creating local storage is one way to solve
+// these problems.
 
 import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
