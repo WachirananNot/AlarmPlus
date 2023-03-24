@@ -213,31 +213,49 @@ class AlarmService extends ChangeNotifier {
     ];
     prefs.setStringList('songs', data);
   }
-
+  // setPrevSong() -> Wachiranan Phuangpanya
+  // A function to filter only purchased sounds by checking the 3rd index to be true or not. 
+  // If it is true then the audio is already purchased.
   void setPrevSong() {
     filteredSongs = songs.where((song) => song[3] == true).toList();
   }
 
+  // selectPrev() -> Wachiranan Phuangpanya
+  // Function for selecting songs to preview. Keep the path of the old song in oldSong. 
+  // and put the path of the new song from list filterdSongs in index into selectedSong
+  // for setting page that songs are already purchased.
   void selectPrev(int index) {
     oldSong = selectedSong;
     selectedSong = filteredSongs[index][1];
   }
 
+  // restoreSong() -> Wachiranan Phuangpanya
+  // The function puts the old song back into 
+  // the selectedSong variable so that the alarm sounds the selected song.
   void restoreSong() {
     selectedSong = oldSong;
   }
 
+  // setPrevSelectedSong() -> Wachiranan Phuangpanya
+  // Function for selecting songs to preview. Keep the path of the old song in oldSong. 
+  // and put the path of the new song from list songs in index into selectedSong
+  // for shop page that song has not yet been purchased.
   void setPrevSelectedSong(int index) {
     oldSong = selectedSong;
     selectedSong = songs[index][1];
     notifyListeners();
   }
-
+  // setColor() -> Wachiranan Phuangpanya
+  // call changeColorCode get parameters as color codes to convert them to. 
+  // materialColor for changing the main color theme and store it in a variable called color
   void setColor(int hexColor) {
     color = changeColorCode(hexColor);
     notifyListeners();
   }
 
+  // setSubColor() -> Wachiranan Phuangpanya
+  // call changeSubColorCode get parameters as color codes to convert them to. 
+  // materialColor for changing the sub color theme and store it in a variable called subColor
   void setSubColor(int hexColor) {
     subColor = changeSubColorCode(hexColor);
     notifyListeners();
