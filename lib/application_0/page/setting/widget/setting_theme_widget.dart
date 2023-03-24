@@ -1,8 +1,25 @@
+// -----------------------------------------------------------------------------
+// Wachiranan Phuangpanya 630510642 (Feature should have: Setting theme and sound)
+// -----------------------------------------------------------------------------
+// setting_theme_widget.dart
+// -----------------------------------------------------------------------------
+// This is a Flutter widget that represents a screen for selecting a theme for an alarm app. 
+// The screen is implemented as a stateful widget that uses the Provider package to retrieve the alarm service instance. 
+// The selected theme is displayed in a grid of images, and a border is added to the selected image. 
+// When an image is tapped, the corresponding theme is saved and its colors are applied to the app. 
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../alarm_service.dart';
-
+// -----------------------------------------------------------------------------
+// SettingTheme
+// -----------------------------------------------------------------------------
+//
+// A StatefulWidget class that represents the Theme Setting Page in the Alarm Plus application.
+// It displays a grid of available themes and allows the user to select and apply one of them.
+// The class listens to changes in the AlarmService for the selected theme and updates the UI accordingly.
+// The class uses the Consumer widget to access the AlarmService and rebuilds the UI whenever there are changes.
 class SettingTheme extends StatefulWidget {
   const SettingTheme({super.key});
 
