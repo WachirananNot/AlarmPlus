@@ -1,5 +1,5 @@
 // -----------------------------------------------------------------------------
-// Wachiranan Phuangpanya 630510642 (Feature should have: Change theme and Change song)
+// Wachiranan Phuangpanya 630510642 (Feature should have: Setting theme and sound)
 // -----------------------------------------------------------------------------
 // setting_page.dart
 // -----------------------------------------------------------------------------
