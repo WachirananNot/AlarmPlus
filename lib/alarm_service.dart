@@ -1,12 +1,13 @@
 // -----------------------------------------------------------------------------
-// Thiradon    Thaiyanto   630510585 (Feature Should have: Cache Management)
-// Natchareeya Panya       630510616 (Feature Should have: )
-// Wachiranan  Phuangpanya 630510642 (Feature Should have: )
+// Thiradon    Thaiyanto   630510585 (Feature Should have: cache Management)
+// Natchareeya Panya       630510616 (Feature Should have: reward management, Could have: shop)
+// Wachiranan  Phuangpanya 630510642 (Feature Could have: setting theme and sound)
 // -----------------------------------------------------------------------------
 // alarm_service.dart
 // -----------------------------------------------------------------------------
 // This is a Flutter/Dart code that defines an AlarmService class as ChangeNotifier
-// that manages the app's alarms.
+// that manages the app's alarms. this file contains many variables and manage
+// many things like notifications, items, and local storage.
 // -----------------------------------------------------------------------------
 // Cache Management (New feature):
 
@@ -259,15 +260,16 @@ class AlarmService extends ChangeNotifier {
     // ];
     prefs.setStringList('songs', data);
   }
+
   // setPrevSong() -> Wachiranan Phuangpanya
-  // A function to filter only purchased sounds by checking the 3rd index to be true or not. 
+  // A function to filter only purchased sounds by checking the 3rd index to be true or not.
   // If it is true then the audio is already purchased.
   void setPrevSong() {
     filteredSongs = songs.where((song) => song[3] == true).toList();
   }
 
   // selectPrev() -> Wachiranan Phuangpanya
-  // Function for selecting songs to preview. Keep the path of the old song in oldSong. 
+  // Function for selecting songs to preview. Keep the path of the old song in oldSong.
   // and put the path of the new song from list filterdSongs in index into selectedSong
   // for setting page that songs are already purchased.
   void selectPrev(int index) {
@@ -276,14 +278,14 @@ class AlarmService extends ChangeNotifier {
   }
 
   // restoreSong() -> Wachiranan Phuangpanya
-  // The function puts the old song back into 
+  // The function puts the old song back into
   // the selectedSong variable so that the alarm sounds the selected song.
   void restoreSong() {
     selectedSong = oldSong;
   }
 
   // setPrevSelectedSong() -> Wachiranan Phuangpanya
-  // Function for selecting songs to preview. Keep the path of the old song in oldSong. 
+  // Function for selecting songs to preview. Keep the path of the old song in oldSong.
   // and put the path of the new song from list songs in index into selectedSong
   // for shop page that song has not yet been purchased.
   void setPrevSelectedSong(int index) {
@@ -291,8 +293,9 @@ class AlarmService extends ChangeNotifier {
     selectedSong = songs[index][1];
     notifyListeners();
   }
+
   // setColor() -> Wachiranan Phuangpanya
-  // call changeColorCode get parameters as color codes to convert them to. 
+  // call changeColorCode get parameters as color codes to convert them to.
   // materialColor for changing the main color theme and store it in a variable called color
   void setColor(int hexColor) {
     color = changeColorCode(hexColor);
@@ -300,7 +303,7 @@ class AlarmService extends ChangeNotifier {
   }
 
   // setSubColor() -> Wachiranan Phuangpanya
-  // call changeSubColorCode get parameters as color codes to convert them to. 
+  // call changeSubColorCode get parameters as color codes to convert them to.
   // materialColor for changing the sub color theme and store it in a variable called subColor
   void setSubColor(int hexColor) {
     subColor = changeSubColorCode(hexColor);
