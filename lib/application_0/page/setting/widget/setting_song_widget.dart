@@ -1,8 +1,27 @@
+// -----------------------------------------------------------------------------
+// Wachiranan Phuangpanya 630510642 (Feature should have: Setting theme and sound)
+// -----------------------------------------------------------------------------
+// setting_song_widget.dart
+// -----------------------------------------------------------------------------
+// This is a Flutter widget that displays a list of songs that the user can select as an alarm tone. 
+// It is connected to a Provider-based AlarmService object, which handles the business logic of selecting and playing songs. 
+// a checkbox indicating if the song is currently selected, and a play/pause button that starts and stops playback of the song. 
+// When a song is selected, the AlarmService object is updated and the selection is saved. 
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../alarm_service.dart';
 
+// -----------------------------------------------------------------------------
+// SettingSong
+// -----------------------------------------------------------------------------
+//
+// This is a Flutter StatefulWidget class called SettingSong that provides a UI for selecting and playing alarm sounds. 
+// The class uses the Provider package to access an instance of an AlarmService class 
+// that manages the available alarm sounds and the user's chosen sound.
+// The SettingSong class displays a list of available alarm sounds as Cards with each sound's name, play/pause button, and checkbox. 
+// The checkbox is used to indicate the user's chosen sound. When the user taps on a sound, the class updates the state to reflect the user's choice 
+// and saves the selected sound using the AlarmService class. The play/pause button allows the user to preview each sound before selecting it.
 class SettingSong extends StatefulWidget {
   const SettingSong({super.key});
 
