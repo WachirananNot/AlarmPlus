@@ -31,6 +31,13 @@ class _SettingThemeState extends State<SettingTheme> {
   @override
   Widget build(BuildContext context) {
     return Consumer<AlarmService>(builder: (_, alarmService, __) {
+      
+      //myBox()
+      //
+      //This function returns a BoxDecoration object with a 2-pixel wide border of the color specified 
+      // in the alarmService object if the isSelectedTheme property is true, or null otherwise. 
+      // The alarmService.color property is used as the color of the border.
+      
       BoxDecoration? myBox() {
         if (alarmService.isSelectedTheme) {
           return BoxDecoration(
