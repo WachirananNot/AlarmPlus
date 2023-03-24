@@ -132,8 +132,8 @@ class _SongListState extends State<SongList> {
         return Scaffold(
           backgroundColor: alarmService.subColor,
           appBar: AppBar(
-            title: const Center(
-                child: Text("Songs", style: TextStyle(color: Colors.white))),
+            title: Text("Songs", style: TextStyle(color: Colors.white)),
+            centerTitle: true,
           ),
           body: Container(
             margin: const EdgeInsets.fromLTRB(0, 5, 0, 0),

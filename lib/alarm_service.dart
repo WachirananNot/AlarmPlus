@@ -9,8 +9,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AlarmService extends ChangeNotifier {
   late AudioPlayer player = AudioPlayer();
-  late MaterialColor color = changeColorCode(0xff9E9CF3);
-  late MaterialColor subColor = changeSubColorCode(0xffCAC9EE);
+  late MaterialColor color;
+  late MaterialColor subColor;
   late Map<int, List<dynamic>> alarmItem = {};
   late int index = 0;
   late int time;
@@ -105,9 +105,6 @@ class AlarmService extends ChangeNotifier {
   Future<void> getData() async {
     final prefs = await SharedPreferences.getInstance();
 
-    // final getChoseSong = prefs.getInt("ChoseSong");
-    // chosenSong = getChoseSong ?? 1;
-
     final getMoney = prefs.getInt("money");
     reward = getMoney ?? 100;
     // reward = 10000;
@@ -146,12 +143,16 @@ class AlarmService extends ChangeNotifier {
 
     final getColorCode = prefs.getInt("colorCode");
     if (getColorCode != null) {
-      color = changeColorCode(getColorCode);
+      setColor(getColorCode);
+    } else {
+      setColor(0xff9E9CF3);
     }
 
     final getSubColorCode = prefs.getInt("subColorCode");
     if (getSubColorCode != null) {
-      subColor = changeColorCode(getSubColorCode);
+      setSubColor(getSubColorCode);
+    } else {
+      setSubColor(0xffCAC9EE);
     }
     notifyListeners();
   }
@@ -185,7 +186,7 @@ class AlarmService extends ChangeNotifier {
         data.add('false');
       }
     });
-    // data = ['false', 'false', 'true', 'false'];
+    data = ['false', 'false', 'true', 'false'];
     prefs.setStringList('themes', data);
   }
 
@@ -201,15 +202,15 @@ class AlarmService extends ChangeNotifier {
         }
       },
     );
-    // data = [
-    //   'true',
-    //   'false',
-    //   'false',
-    //   'false',
-    //   'false',
-    //   'false',
-    //   'false',
-    // ];
+    data = [
+      'true',
+      'false',
+      'false',
+      'false',
+      'false',
+      'false',
+      'false',
+    ];
     prefs.setStringList('songs', data);
   }
 
