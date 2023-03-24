@@ -1,5 +1,16 @@
-import 'dart:math';
+// -----------------------------------------------------------------------------
+// Thiradon    Thaiyanto   630510585 (Feature Should have: Cache Management)
+// Natchareeya Panya       630510616 (Feature Should have: )
+// Wachiranan  Phuangpanya 630510642 (Feature Should have: )
+// -----------------------------------------------------------------------------
+// alarm_service.dart
+// -----------------------------------------------------------------------------
+// This is a Flutter/Dart code that defines an AlarmService class as ChangeNotifier
+// that manages the app's alarms.
+// -----------------------------------------------------------------------------
+// Cache Management (New feature):
 
+import 'dart:math';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +18,17 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+// -----------------------------------------------------------------------------
+// AlarmService
+// -----------------------------------------------------------------------------
+//
+// AlarmService class that manages the app's alarms. It is including audioplayers
+// for audio playback and shared_preferences for data persistence. The class has
+// instance variables that store information about the alarms, including the audio player,
+// the color scheme, the alarm items, and the reward system. It also includes
+// a list of songs, themes, problems, and answers, as well as methods for retrieving
+// and storing data using SharedPreferences. The AlarmService class is a ChangeNotifier,
+// allowing it to notify listeners of any changes to its state.
 class AlarmService extends ChangeNotifier {
   late AudioPlayer player = AudioPlayer();
   late MaterialColor color;
@@ -102,12 +124,16 @@ class AlarmService extends ChangeNotifier {
     getData();
   }
 
+  // getData() **Thiradon
+  // Get data from persistent storage that contains reward,
+  // themes, songs, selected theme, and selected song. It is called in
+  // constructor of AlarmService. this function also initials default value
+  // if no data in persistent storage.
   Future<void> getData() async {
     final prefs = await SharedPreferences.getInstance();
 
     final getMoney = prefs.getInt("money");
     reward = getMoney ?? 100;
-    // reward = 10000;
 
     final getThemeDetail = prefs.getStringList("themes");
     if (getThemeDetail != null) {
@@ -157,24 +183,40 @@ class AlarmService extends ChangeNotifier {
     notifyListeners();
   }
 
+  // saveRewardData() **Thiradon
+  // save reward amount into persistent storage. It is called
+  // when users get reward from correct answer and buy themes or
+  // songs.
   Future<void> saveRewardData() async {
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setInt("money", reward);
   }
 
+  // saveChooseTheme() **Thiradon
+  // save color of theme that is selected into persistent storage.
+  // It is called when users change their theme. colorCode is represented
+  // primary color and subColorCode is for secondary color.
   Future<void> saveChooseTheme(int colorCode, int subColorCode) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt("colorCode", colorCode);
     await prefs.setInt("subColorCode", subColorCode);
   }
 
+  // saveSelectSong() **Thiradon
+  // save song that is selected into persistent storage.
+  // It is called when users change their notification sound.
+  // It stores url and index of song.
   Future<void> saveSelectSong() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt("songIndex", chosenSong);
     await prefs.setString("songLink", selectedSong);
   }
 
+  // saveTheme() **Thiradon
+  // save details of bought and unbought themes.
+  // "true" means this theme has already  been bought.
+  // "false" means this theme hasn't been bought yet.
   Future<void> saveTheme() async {
     final prefs = await SharedPreferences.getInstance();
     List<String> data = [];
@@ -186,10 +228,14 @@ class AlarmService extends ChangeNotifier {
         data.add('false');
       }
     });
-    data = ['false', 'false', 'true', 'false'];
+    // data = ['false', 'false', 'true', 'false'];
     prefs.setStringList('themes', data);
   }
 
+  // saveTheme() **Thiradon
+  // save details of bought and unbought songs.
+  // "true" means this song has already  been bought.
+  // "false" means this song hasn't been bought yet.
   Future<void> saveSong() async {
     final prefs = await SharedPreferences.getInstance();
     List<String> data = [];
@@ -202,15 +248,15 @@ class AlarmService extends ChangeNotifier {
         }
       },
     );
-    data = [
-      'true',
-      'false',
-      'false',
-      'false',
-      'false',
-      'false',
-      'false',
-    ];
+    // data = [
+    //   'true',
+    //   'false',
+    //   'false',
+    //   'false',
+    //   'false',
+    //   'false',
+    //   'false',
+    // ];
     prefs.setStringList('songs', data);
   }
 
