@@ -7,6 +7,11 @@
 // The screen is implemented as a stateful widget that uses the Provider package to retrieve the alarm service instance. 
 // The selected theme is displayed in a grid of images, and a border is added to the selected image. 
 // When an image is tapped, the corresponding theme is saved and its colors are applied to the app. 
+// -----------------------------------------------------------------------------
+// SettingTheme (New Feature) :
+// The reason for our desire to add more features to the app is to provide users with greater functionality. 
+// Specifically, we wish to enable users to utilize their coins to make in-app purchases, beyond just acquiring alarm sounds. 
+// As part of this effort, we plan to incorporate a feature that will allow users to modify the app's color scheme by changing the theme.
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -20,11 +25,7 @@ import '../../../../alarm_service.dart';
 // It displays a grid of available themes and allows the user to select and apply one of them.
 // The class listens to changes in the AlarmService for the selected theme and updates the UI accordingly.
 // The class uses the Consumer widget to access the AlarmService and rebuilds the UI whenever there are changes.
-// -----------------------------------------------------------------------------
-// SettingTheme (New Feature) :
-// The reason for our desire to add more features to the app is to provide users with greater functionality. 
-// Specifically, we wish to enable users to utilize their coins to make in-app purchases, beyond just acquiring alarm sounds. 
-// As part of this effort, we plan to incorporate a feature that will allow users to modify the app's color scheme by changing the theme.
+
 
 class SettingTheme extends StatefulWidget {
   const SettingTheme({super.key});
